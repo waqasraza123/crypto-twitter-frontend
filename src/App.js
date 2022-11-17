@@ -10,7 +10,7 @@ import Register from "./components/register";
  */
 const classes = "container";
 const isLoggedIn = false;
-const isRegistered = false;
+const isRegistered = true;
 /**
  * Root level component to host all the
  * child components
