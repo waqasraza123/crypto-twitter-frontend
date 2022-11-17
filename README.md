@@ -1,3 +1,7 @@
+# Tech Stack
+Frontend - Reactjs & Bootstrap   
+Backend - ExpressJs/NodeJs & Firebase  
+
 Some Typos Ahead. ;)
 # Done
 1- Added Bootstrap via npm.  
