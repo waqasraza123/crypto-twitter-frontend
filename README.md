@@ -1,4 +1,4 @@
-Some Typos Ahead.
+Some Typos Ahead. ;)
 # Done
 1- Added Bootstrap via npm.  
 2- Added login and register components.  
