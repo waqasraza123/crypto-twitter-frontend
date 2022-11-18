@@ -3,6 +3,7 @@ import Login from "./components/login";
 import Register from "./components/register";
 import Navbar from "./components/navbar";
 import Listings from "./components/listings";
+import { Route, Routes } from "react-router-dom";
 
 
 /**
@@ -22,9 +23,13 @@ export default class App extends Component {
         return (
         <div className={classes}>
             <Navbar />
-            <div className="container mt-4">
-                <Listings />
-            </div>
+
+            <Routes>
+                <Route path="/login" element={ <Login /> }/>
+                <Route path="/register" element={ <Register /> }/>
+                <Route path="/" element={ <Listings /> } />
+            </Routes>
+
         </div>
         );
     }
