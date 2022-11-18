@@ -3,6 +3,9 @@ import axios from "axios";
 
 const baseURL = "https://coinmarketcap.com/currencies/";
 
+/**
+ * Listings Class to list all the available crypto
+ */
 export default class Listings extends Component {
 
     state = {
