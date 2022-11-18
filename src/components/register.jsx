@@ -91,7 +91,6 @@ export default class Register extends Component {
                     <button type="button"
                             className="w-100 btn btn-lg btn-primary"
                             onClick={this.handleRegister}>Register</button>
-                    <p className="mt-5 mb-3 text-danger">@ I Support Ukraine 2022</p>
                 </form>
             </main>
         );

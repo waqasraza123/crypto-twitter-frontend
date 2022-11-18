@@ -7,6 +7,7 @@ import Features from "./components/features";
 import About from "./components/about";
 import FAQ from "./components/faq";
 import Pricing from "./components/pricing";
+import Footer from "./components/footer";
 import { Route, Routes } from "react-router-dom";
 
 
@@ -37,6 +38,7 @@ export default class App extends Component {
                 <Route path="/" element={ <Listings /> } />
             </Routes>
 
+            <Footer />
         </div>
         );
     }

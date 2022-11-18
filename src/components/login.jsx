@@ -73,7 +73,6 @@ export default class Login extends Component {
                     <button className="w-100 btn btn-lg btn-primary"
                             onClick={this.handleLogin}
                             type="button">Sign in</button>
-                    <p className="mt-5 mb-3 text-danger">@ I Support Ukraine 2022</p>
                 </form>
             </main>
         );
