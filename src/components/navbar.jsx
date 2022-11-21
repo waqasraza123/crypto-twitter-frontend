@@ -2,6 +2,23 @@ import React, {Component} from "react";
 import { Link } from "react-router-dom";
 
 export default class Navbar extends Component {
+
+    handleAuthButtons = () => {
+
+        const isLoggedIn = localStorage.getItem("accessToken");
+        const name = localStorage.getItem("name");
+
+        return (!isLoggedIn ?
+            <button type="button" className="btn btn-outline-light me-2">
+                <Link className="text-decoration-none" to="/login">Login</Link>
+            </button>
+            :
+            <button className="btn btn-outline-success btn-success">
+                <Link className="text-decoration-none text-white" to="/profile">{name || "Profile"}</Link>
+            </button>
+        );
+    }
+
     render(){
         return (
             <header className="p-3 text-bg-dark">
@@ -14,7 +31,7 @@ export default class Navbar extends Component {
 
                         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                             <li>
-                                <Link to="/" className="nav-link px-2 text-secondary">Home</Link>
+                                <Link to="/listings" className="nav-link px-2 text-secondary">Listings</Link>
                             </li>
                             <li>
                                 <Link to="/features" className="nav-link px-2 text-white">Features</Link>
@@ -36,12 +53,7 @@ export default class Navbar extends Component {
                         </form>
 
                         <div className="text-end">
-                            <button type="button" className="btn btn-outline-light me-2">
-                                <Link className="text-decoration-none" to="/login">Login</Link>
-                            </button>
-                            <button type="button" className="btn btn-warning">
-                                <Link className="text-decoration-none" to="/register">Sign-up</Link>
-                            </button>
+                            {this.handleAuthButtons()}
                         </div>
                     </div>
                 </div>

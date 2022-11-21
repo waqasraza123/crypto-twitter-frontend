@@ -9,6 +9,8 @@ import FAQ from "./components/faq";
 import Pricing from "./components/pricing";
 import Footer from "./components/footer";
 import { Route, Routes } from "react-router-dom";
+import ProtectedRoutes from "./components/protectedRoutes";
+import Profile from "./components/profile";
 
 
 /**
@@ -19,7 +21,7 @@ const isLoggedIn = true;
 const isAdmin = true; //just for development purposes
 /**
  * Root level component to host all the
- * child components
+ * child componentsmn
  */
 export default class App extends Component {
 
@@ -29,13 +31,19 @@ export default class App extends Component {
             <Navbar />
 
             <Routes>
+                <Route path="/" element={ <h1>Home!</h1> }></Route>
                 <Route path="login" element={ <Login /> } />
                 <Route path="register" element={ <Register /> } />
                 <Route path="pricing" element={ <Pricing /> } />
                 <Route path="about" element={ <About /> } />
                 <Route path="faq" element={ <FAQ /> } />
                 <Route path="features" element={ <Features /> } />
-                <Route path="/" element={ <Listings /> } />
+
+                <Route element={ <ProtectedRoutes /> }>
+                    <Route path="/profile" element={ <Profile /> } />
+                    <Route path="/listings" element={ <Listings /> } />
+                </Route>
+
             </Routes>
 
             <Footer />

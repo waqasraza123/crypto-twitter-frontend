@@ -17,7 +17,8 @@ connected with coinmarketcap api
 1- Manage & Maintain user sessions.  
 2- Connect Login and Register Components as modals.  
 3- Add the functionality for favorite list.  
-4- And more  
+4- Replace firebase for mongodb  
+5- And more  
 ....
 # Screenshots
 https://ibb.co/fqNKD0w

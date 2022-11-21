@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import {auth} from "../firebase";
-import {signInWithEmailAndPassword} from "firebase/auth";
+import axios from "axios";
+import {Link} from "react-router-dom";
 
 export default class Login extends Component {
 
@@ -29,28 +29,34 @@ export default class Login extends Component {
      * @email
      * @password
      */
-    handleLogin = () => {
+    handleLogin = async () => {
 
         const email = this.state.email;
         const password = this.state.password;
+        const baseUrl = process.env.REACT_APP_BASE_API_URL;
+        const path = "/auth/login";
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                console.log(user);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-            });
+        const user = await axios.post(baseUrl + path,
+            {
+            "email": email,
+            "password": password
+            }
+        );
+
+        //save the accessToken on localstorage
+        if(user){
+            localStorage.setItem("accessToken", user.data.accessToken);
+            localStorage.setItem("name", user.data.name);
+            localStorage.setItem("email", user.data.email);
+        }
     }
+
+
 
 
     render() {
         return (
-            <main className="form-signin w-100 m-auto">
+            <main className="form-signin w-100 m-auto mt-5" style={{maxWidth: "330px"}}>
                 <form>
                     <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -74,6 +80,11 @@ export default class Login extends Component {
                             onClick={this.handleLogin}
                             type="button">Sign in</button>
                 </form>
+
+                <button type="button" className="btn btn-warning mt-2">
+                    <Link className="text-decoration-none" to="/register">Sign-up</Link>
+                </button>
+
             </main>
         );
     }

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 
-const baseURL = "https://coinmarketcap.com/currencies/";
+const CMCURL = "https://coinmarketcap.com/currencies/";
 
 /**
  * Listings Class to list all the available crypto
@@ -27,19 +27,25 @@ export default class Listings extends Component {
     }
 
     //fetch the data via and update the listings state
-    getAllCryptoListings() {
-        let response = null;
+    async getAllCryptoListings() {
 
-        axios.get('http://localhost:8000/api/v1/cryptocurrency/listings/latest')
-            .then( (res) => {
-                    response = res;
-                    console.log(response.data.data);
-                })
-            .catch( (error) => console.log(error) )
-            .finally(
-                () => {
-                    this.setState({listings: response.data.data})
-                } )
+        const path = "/crypto/all";
+        const baseUrl = process.env.REACT_APP_BASE_API_URL;
+        const accessToken = localStorage.getItem("accessToken");
+
+        try{
+            const response = await axios.get(baseUrl + path, {
+                headers: {"Authorization": "Bearer " + accessToken}
+            });
+
+            if(response){
+                this.setState({listings: response.data.data});
+            }
+
+        }catch (err){
+            console.log(err.message);
+        }
+
     }
 
 
@@ -81,7 +87,7 @@ export default class Listings extends Component {
                                             {item.id}
                                         </td>
                                         <td>
-                                            <a className="text-decoration-none" href={baseURL + item.slug}> {item.name} - <span className="text-muted fw-lighter">{item.symbol}</span></a>
+                                            <a className="text-decoration-none" href={CMCURL + item.slug}> {item.name} - <span className="text-muted fw-lighter">{item.symbol}</span></a>
                                         </td>
                                         <td>
                                             ${num.price.toLocaleString()}

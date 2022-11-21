@@ -1,6 +1,5 @@
 import React, {Component} from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import {auth} from "../firebase";
+import axios from "axios";
 
 export default class Register extends Component {
 
@@ -32,32 +31,39 @@ export default class Register extends Component {
      * @email
      * @password
      */
-    handleRegister = () => {
+    handleRegister = async () => {
 
         const name = this.state.name;
         const email = this.state.email;
         const password = this.state.password;
-
+        const baseUrl = process.env.REACT_APP_BASE_API_URL;
+        const path = "/auth/register";
 
 
         // Create user with email and pass.
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                console.log(user);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-            });
+        try{
+            const user =
+                await axios.post(baseUrl + path, {
+                    "name": name,
+                    "email": email,
+                    "password": password
+                });
+            const accessToken = user.data.accessToken;
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("name", name);
+            localStorage.setItem("email", email);
+
+       //catch the error
+        }catch (err){
+            console.log(err.message);
+        }
+
     }
 
     render() {
 
         return (
-            <main className="form-signin w-100 m-auto">
+            <main className="form-signin w-100 m-auto mt-5" style={{maxWidth: "330px"}}>
                 <form>
                     <h1 className="h3 mb-3 fw-normal">Please Register</h1>
 
