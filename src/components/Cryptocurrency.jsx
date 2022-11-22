@@ -6,7 +6,7 @@ const CMCURL = "https://coinmarketcap.com/currencies/";
 /**
  * Listings Class to list all the available crypto
  */
-export default class Listings extends Component {
+export default class Cryptocurrency extends Component {
 
     state = {
         listings: null
@@ -14,7 +14,7 @@ export default class Listings extends Component {
 
     //when the component is mounted to dom first
     componentDidMount() {
-        this.getAllCryptoListings();
+        this.getAll();
     }
 
     //returns red or green class to indicate +ve or -ve change
@@ -27,21 +27,24 @@ export default class Listings extends Component {
     }
 
     //fetch the data via and update the listings state
-    async getAllCryptoListings() {
+    async getAll() {
 
         const path = "/crypto/all";
         const baseUrl = process.env.REACT_APP_BASE_API_URL;
         const accessToken = localStorage.getItem("accessToken");
 
+        //call the server for data
         try{
             const response = await axios.get(baseUrl + path, {
                 headers: {"Authorization": "Bearer " + accessToken}
             });
 
+            //success
             if(response){
                 this.setState({listings: response.data.data});
             }
 
+        //error - failed to fetch
         }catch (err){
             console.log(err.message);
         }

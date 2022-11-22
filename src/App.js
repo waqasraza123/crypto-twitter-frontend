@@ -1,27 +1,28 @@
 import React, {Component} from "react";
-import Login from "./components/login";
-import Register from "./components/register";
-import Navbar from "./components/navbar";
-import Listings from "./components/listings";
-import Features from "./components/features";
-import About from "./components/about";
-import FAQ from "./components/faq";
-import Pricing from "./components/pricing";
-import Footer from "./components/footer";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Navbar from "./components/Navbar";
+import Cryptocurrency from "./components/Cryptocurrency";
+import Features from "./components/Features";
+import About from "./components/About";
+import Faq from "./components/Faq";
+import Pricing from "./components/Pricing";
+import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
-import ProtectedRoutes from "./components/protectedRoutes";
-import Profile from "./components/profile";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import Profile from "./components/Profile";
+import Counter from "./components/Counter";
 
 
 /**
- * constants and variables
+ * variables
  *
  */
 const isLoggedIn = true;
 const isAdmin = true; //just for development purposes
 /**
  * Root level component to host all the
- * child componentsmn
+ * child components
  */
 export default class App extends Component {
 
@@ -29,19 +30,19 @@ export default class App extends Component {
         return (
         <div className="root-container">
             <Navbar />
-
+            <Counter />
             <Routes>
                 <Route path="/" element={ <h1>Home!</h1> }></Route>
                 <Route path="login" element={ <Login /> } />
                 <Route path="register" element={ <Register /> } />
                 <Route path="pricing" element={ <Pricing /> } />
                 <Route path="about" element={ <About /> } />
-                <Route path="faq" element={ <FAQ /> } />
+                <Route path="faq" element={ <Faq /> } />
                 <Route path="features" element={ <Features /> } />
 
                 <Route element={ <ProtectedRoutes /> }>
                     <Route path="/profile" element={ <Profile /> } />
-                    <Route path="/listings" element={ <Listings /> } />
+                    <Route path="/listings" element={ <Cryptocurrency /> } />
                 </Route>
 
             </Routes>

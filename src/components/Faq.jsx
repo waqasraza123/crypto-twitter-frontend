@@ -1,11 +1,10 @@
 import React, {Component} from "react";
-import Logout from "./logout";
 
-export default class Profile extends Component {
+export default class Faq extends Component{
     render() {
         return (
             <div>
-                <Logout />
+                <h1>Frequently Asked Questions</h1>
             </div>
         );
     }
