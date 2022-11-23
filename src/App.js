@@ -11,7 +11,6 @@ import Footer from "./components/Footer";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Profile from "./components/Profile";
-import Counter from "./components/Counter";
 
 
 /**
@@ -30,7 +29,6 @@ export default class App extends Component {
         return (
         <div className="root-container">
             <Navbar />
-            <Counter />
             <Routes>
                 <Route path="/" element={ <h1>Home!</h1> }></Route>
                 <Route path="login" element={ <Login /> } />

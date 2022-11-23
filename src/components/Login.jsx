@@ -1,9 +1,8 @@
-import React, {Component, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setUserData} from "../features/user/user-slice"
-import Profile from "./Profile";
 
 const Login = () => {
 
