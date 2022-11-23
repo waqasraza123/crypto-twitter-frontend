@@ -1,15 +1,15 @@
-import React, {Component} from "react";
+import React from "react";
 import {Navigate, Outlet} from "react-router-dom";
+import {useSelector} from "react-redux";
 
-export default class ProtectedRoutes extends Component {
+const ProtectedRoutes = () => {
 
-    render() {
+    const isLoggedIn = useSelector( state => state.user.isLoggedIn );
 
-        const isLoggedIn = localStorage.getItem("accessToken");
-
-        return(
-            isLoggedIn ? <Outlet /> : <Navigate to="/login" />
-        );
-    }
+    return(
+        isLoggedIn ? <Outlet /> : <Navigate to="/login" />
+    );
 
 }
+
+export default ProtectedRoutes;
