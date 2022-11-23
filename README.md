@@ -2,24 +2,12 @@
 Frontend - Reactjs & Bootstrap   
 Backend - ExpressJs/NodeJs & Firebase  
 
-Some Typos Ahead. ;)
-# Done
-1- Added Bootstrap via npm.  
-2- Added login and register components.  
-3- Added `firebase` using npm.  
-4- authentication done via firebase.  
-5- connected react with nodejs(expressjs) backend for apis.
-connected with coinmarketcap api  
-6- fetched all cryptos listing and showed on the frontend.  
-7- Added ReactRouter for routing.  
+# Flavors
+Using:  
+redux for shared data across multiple components.  
+axios for requests to the server.  
+Bootstrap for HTML & CSS markup.
 
-## ToDo
-1- Manage & Maintain user sessions.  
-2- Connect Login and Register Components as modals.  
-3- Add the functionality for favorite list.  
-4- Replace firebase for mongodb  
-5- And more  
-....
 # Screenshots
 https://ibb.co/fqNKD0w
 
