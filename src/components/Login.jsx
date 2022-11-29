@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {setUserData} from "../features/user/user-slice"
+import {setUserData} from "../features/user/user-slice";
 
 const Login = () => {
 
@@ -50,6 +50,8 @@ const Login = () => {
             //save the accessToken on localstorage
             if(response){
                 localStorage.setItem("accessToken", response.data.accessToken);
+                localStorage.setItem("refreshToken", response.data.refreshToken);
+                localStorage.setItem("email", response.data.email);
                 response.data.isLoggedIn = true;
             }
 

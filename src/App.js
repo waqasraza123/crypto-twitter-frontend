@@ -1,16 +1,16 @@
 import React, {Component} from "react";
+import { Route, Routes } from "react-router-dom";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Navbar from "./components/Navbar";
 import Cryptocurrency from "./components/Cryptocurrency";
 import Features from "./components/Features";
-import About from "./components/About";
 import Faq from "./components/Faq";
 import Pricing from "./components/Pricing";
 import Footer from "./components/Footer";
-import { Route, Routes } from "react-router-dom";
-import ProtectedRoutes from "./components/ProtectedRoutes";
 import Profile from "./components/Profile";
+import Blog from "./components/Blog";
 
 
 /**
@@ -34,7 +34,7 @@ export default class App extends Component {
                 <Route path="login" element={ <Login /> } />
                 <Route path="register" element={ <Register /> } />
                 <Route path="pricing" element={ <Pricing /> } />
-                <Route path="about" element={ <About /> } />
+                <Route path="blog" element={ <Blog /> } />
                 <Route path="faq" element={ <Faq /> } />
                 <Route path="features" element={ <Features /> } />
 

@@ -1,28 +1,33 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import axios from "axios";
+import {setUserData} from "../features/user/user-slice";
+import {useDispatch} from "react-redux";
 
-export default class Register extends Component {
+const Register = () => {
 
-    state = {
+    const state = {
         name: '',
         email: '',
         password: '',
     };
 
+    const [user, setUser] = useState(state);
+    const dispatch = useDispatch();
+
     /**
      * handle form inputs
      * @param event
      */
-    handleName = (event) => {
-        this.setState({name: event.target.value});
+    const handleName = (event) => {
+        setUser({...user, name: event.target.value});
     }
 
-    handleEmail = (event) => {
-        this.setState({email: event.target.value});
+    const handleEmail = (event) => {
+        setUser({...user, email: event.target.value});
     }
 
-    handlePassword = (event) => {
-        this.setState({password: event.target.value});
+    const handlePassword = (event) => {
+        setUser({...user, password: event.target.value});
     }
 
     /**
@@ -31,7 +36,7 @@ export default class Register extends Component {
      * @email
      * @password
      */
-    handleRegister = async () => {
+    const handleRegister = async () => {
 
         const name = this.state.name;
         const email = this.state.email;
@@ -42,16 +47,19 @@ export default class Register extends Component {
 
         // Create user with email and pass.
         try{
-            const user =
+            const response =
                 await axios.post(baseUrl + path, {
                     "name": name,
                     "email": email,
                     "password": password
                 });
-            const accessToken = user.data.accessToken;
-            localStorage.setItem("accessToken", accessToken);
-            localStorage.setItem("name", name);
-            localStorage.setItem("email", email);
+
+            //set the tokens in local storage
+            //change to redis when needed.
+            localStorage.setItem("accessToken", user.data.accessToken);
+            localStorage.setItem("refreshToken", user.data.refreshToken);
+
+            dispatch(setUserData(response.data));
 
        //catch the error
         }catch (err){
@@ -60,46 +68,45 @@ export default class Register extends Component {
 
     }
 
-    render() {
+    return (
+        <main className="form-signin w-100 m-auto mt-5" style={{maxWidth: "330px"}}>
+            <form>
+                <h1 className="h3 mb-3 fw-normal">Please Register</h1>
 
-        return (
-            <main className="form-signin w-100 m-auto mt-5" style={{maxWidth: "330px"}}>
-                <form>
-                    <h1 className="h3 mb-3 fw-normal">Please Register</h1>
+                <div className="form-floating">
+                    <input type="text" className="form-control" id="registerName"
+                           placeholder="John Doe"
+                           value={state.name}
+                           onChange={handleName}
+                    />
+                    <label htmlFor="registerName">Name</label>
+                </div>
 
-                    <div className="form-floating">
-                        <input type="text" className="form-control" id="registerName"
-                               placeholder="John Doe"
-                               value={this.state.name}
-                               onChange={this.handleName}
-                                />
-                        <label htmlFor="registerName">Name</label>
-                    </div>
+                <div className="form-floating">
+                    <input type="email" className="form-control" id="floatingInput"
+                           placeholder="name@example.com"
+                           value={state.email}
+                           onChange={handleEmail}
+                    />
+                    <label htmlFor="floatingInput">Email address</label>
+                </div>
 
-                    <div className="form-floating">
-                        <input type="email" className="form-control" id="floatingInput"
-                               placeholder="name@example.com"
-                               value={this.state.email}
-                               onChange={this.handleEmail}
-                                />
-                        <label htmlFor="floatingInput">Email address</label>
-                    </div>
+                <div className="form-floating">
+                    <input type="password" className="form-control" id="floatingPassword"
+                           placeholder="Password"
+                           value={state.password}
+                           onChange={handlePassword}
+                    />
+                    <label htmlFor="floatingPassword">Password</label>
+                </div>
 
-                    <div className="form-floating">
-                        <input type="password" className="form-control" id="floatingPassword"
-                               placeholder="Password"
-                               value={this.state.password}
-                               onChange={this.handlePassword}
-                                />
-                        <label htmlFor="floatingPassword">Password</label>
-                    </div>
+                <button type="button"
+                        className="w-100 btn btn-lg btn-primary"
+                        onClick={handleRegister}>Register</button>
+            </form>
+        </main>
+    );
 
-                    <button type="button"
-                            className="w-100 btn btn-lg btn-primary"
-                            onClick={this.handleRegister}>Register</button>
-                </form>
-            </main>
-        );
-
-    }
 }
+
+export default Register;

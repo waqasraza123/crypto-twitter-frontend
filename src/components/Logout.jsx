@@ -27,6 +27,7 @@ const Logout = () => {
             //save the accessToken on localstorage
             if(response){
                 localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
                 response.data.isLoggedIn = false;
             }
 

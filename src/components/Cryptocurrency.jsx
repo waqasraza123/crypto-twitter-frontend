@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import refreshAccessToken from "../config/refresh-token"
 
 const CMCURL = "https://coinmarketcap.com/currencies/";
 
@@ -8,8 +9,11 @@ const CMCURL = "https://coinmarketcap.com/currencies/";
  */
 export default class Cryptocurrency extends Component {
 
-    state = {
-        listings: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            listings: null
+        }
     }
 
     //when the component is mounted to dom first
@@ -31,24 +35,25 @@ export default class Cryptocurrency extends Component {
 
         const path = "/crypto/all";
         const baseUrl = process.env.REACT_APP_BASE_API_URL;
-        const accessToken = localStorage.getItem("accessToken");
 
         //call the server for data
         try{
             const response = await axios.get(baseUrl + path, {
-                headers: {"Authorization": "Bearer " + accessToken}
-            });
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("accessToken")
+                }
+            })
 
             //success
             if(response){
+
                 this.setState({listings: response.data.data});
             }
 
         //error - failed to fetch
         }catch (err){
-            console.log(err.message);
+            console.log(err.response.status);
         }
-
     }
 
 

@@ -14,7 +14,7 @@ const userSlice = createSlice({
     reducers: {
         //on login it will be true and on logged out it will be false
         setUserData(state, action){
-            console.log(state, action.payload);
+
             state.isLoggedIn = action.payload.isLoggedIn;
             state.name = action.payload.name;
             state.email = action.payload.email;
