@@ -3,10 +3,10 @@ import {Navigate, Outlet} from "react-router-dom";
 
 const ProtectedRoutes = () => {
 
-    let isExpired = true;
+    const data = JSON.parse(localStorage.getItem("user"))
 
     return(
-        isExpired ? <Outlet /> : <Navigate to="/login" />
+        (data && data.user.accessToken) ? <Outlet /> : <Navigate to="/login" />
     );
 
 }
