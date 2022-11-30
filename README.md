@@ -11,6 +11,7 @@ Shows posts in real time as they are added
 - shows all tweets sorted by latest
 
 # Screenshots
-https://ibb.co/fqNKD0w
+- https://ibb.co/fqNKD0w
+- https://ibb.co/S7ytqBX
 
 ####

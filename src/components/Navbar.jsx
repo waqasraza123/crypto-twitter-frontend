@@ -45,17 +45,17 @@ const Navbar = () => {
     function NavbarItem(props){
         return(
             <li>
-                <Link to={props.path} className="nav-link px-2 text-white">{props.text}</Link>
+                <Link to={props.path} className="nav-link px-2 text-dark">{props.text}</Link>
             </li>
         );
     }
 
     return (
-        <header className="p-3 text-bg-dark">
+        <header className="p-3 text-bg-light">
             <div className="container">
                 <div
                     className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                    <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
                         Latest Tweets
                     </a>
 
