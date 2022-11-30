@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import refreshAccessToken from "../config/refresh-token"
-import CategoriesBar from "./crypto/CategoriesBar";
+import CategoriesBar from "./CategoriesBar";
 
 const CMCURL = "https://coinmarketcap.com/currencies/";
 
