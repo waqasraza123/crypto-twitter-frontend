@@ -2,9 +2,13 @@
 Frontend - Reactjs & Bootstrap   
 Backend - ExpressJs/NodeJs & Firebase  
 
+# Crypto
+- shows latest cryptocurrencies
+- using coinmarketcap rest api - free version
+
 # Blog Page
-Create a post   
-Shows posts in real time as they are added
+- Create a post   
+- Shows posts in real time as they are added
 
 # Tweets Page
 - can create tweets
