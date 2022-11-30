@@ -5,12 +5,10 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Navbar from "./components/Navbar";
 import Cryptocurrency from "./components/Cryptocurrency";
-import Features from "./components/Features";
-import Faq from "./components/Faq";
-import Pricing from "./components/Pricing";
 import Footer from "./components/Footer";
 import Profile from "./components/Profile";
 import Blog from "./components/Blog";
+import Home from "./components/Home";
 
 
 /**
@@ -30,13 +28,10 @@ export default class App extends Component {
         <div className="root-container">
             <Navbar />
             <Routes>
-                <Route path="/" element={ <h1>Home!</h1> }></Route>
+                <Route path="/" element={ <Home /> }></Route>
                 <Route path="login" element={ <Login /> } />
                 <Route path="register" element={ <Register /> } />
-                <Route path="pricing" element={ <Pricing /> } />
                 <Route path="blog" element={ <Blog /> } />
-                <Route path="faq" element={ <Faq /> } />
-                <Route path="features" element={ <Features /> } />
 
                 <Route element={ <ProtectedRoutes /> }>
                     <Route path="/profile" element={ <Profile /> } />

@@ -30,7 +30,7 @@ const Blog = () => {
         //call the function
         getPosts().catch(error => toast.error(error.message))
 
-    }) //runs on mount
+    }, []) //runs on mount
 
     return (
         <div className="container">

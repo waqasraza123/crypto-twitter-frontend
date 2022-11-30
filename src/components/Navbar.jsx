@@ -56,14 +56,11 @@ const Navbar = () => {
                 <div
                     className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                     <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                        Crypto World!
+                        Latest Tweets
                     </a>
 
                     <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <NavbarItem text="Latest" path="/listings"/>
-                        <NavbarItem text="Features" path="/features"/>
-                        <NavbarItem text="Pricing" path="/pricing"/>
-                        <NavbarItem text="FAQs" path="/faq"/>
+                        <NavbarItem text="Crypto" path="/listings"/>
                         <NavbarItem text="Blog" path="/blog"/>
                     </ul>
 
