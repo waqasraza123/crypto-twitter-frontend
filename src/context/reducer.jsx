@@ -1,8 +1,8 @@
-let user = localStorage.getItem("currentUser")
-    ? JSON.parse(localStorage.getItem("currentUser")).user
+let user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).user
     : "";
-let token = localStorage.getItem("currentUser")
-    ? JSON.parse(localStorage.getItem("currentUser")).auth_token
+let token = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).accessToken
     : "";
 
 export const initialState = {

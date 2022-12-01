@@ -6,7 +6,7 @@ const ProtectedRoutes = () => {
     const data = JSON.parse(localStorage.getItem("user"))
 
     return(
-        (data && data.user.accessToken) ? <Outlet /> : <Navigate to="/login" />
+        (data && data.accessToken) ? <Outlet /> : <Navigate to="/login" />
     );
 
 }
