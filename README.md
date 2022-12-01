@@ -1,6 +1,7 @@
 # Tech Stack
-Frontend - Reactjs & Bootstrap   
-Backend - ExpressJs/NodeJs & Firebase  
+- Frontend - Reactjs & Bootstrap   
+- Backend - ExpressJs/NodeJs & Firebase  
+- with JWT authentication
 
 # Crypto
 - shows latest cryptocurrencies
