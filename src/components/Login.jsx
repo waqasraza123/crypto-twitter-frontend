@@ -12,7 +12,7 @@ const Login = () => {
     const [password, setPassword] = useState("")
 
     //dispatch is used in reducers to update the state
-    const authDispatch = useContext(AuthDispatchContext);
+    const authDispatchContext = useContext(AuthDispatchContext);
 
 
     /**
@@ -30,11 +30,8 @@ const Login = () => {
         }
 
         try{
-            const response = await loginUser(authDispatch, payload)
-            if(response){
-                toast.success("Log in successful, Redirecting.")
-                return redirect("/")
-            }
+            await loginUser(authDispatchContext, payload)
+            toast.success("Log in successful, Redirecting.")
         }catch (error){
             toast.error(error.message)
         }

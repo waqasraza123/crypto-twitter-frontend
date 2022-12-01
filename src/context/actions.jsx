@@ -1,4 +1,5 @@
 import axios from "axios";
+import {redirect} from "react-router-dom";
 
 const url = process.env.REACT_APP_BASE_API_URL;
 const path = "/auth/login";
@@ -29,7 +30,7 @@ export async function loginUser(dispatch, loginPayload){
 
             //save the user in local
             localStorage.setItem("user", JSON.stringify(response.data))
-            return response.data
+            return redirect("/")
         }
 
     //catch errors
@@ -44,4 +45,5 @@ export function logout(dispatch){
     })
 
     localStorage.removeItem("user")
+    return redirect("/")
 }

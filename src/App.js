@@ -27,10 +27,10 @@ export default class App extends Component {
                         <Route path="register" element={ <Register /> } />
 
                         <Route element={ <ProtectedRoutes /> }>
-                            <Route path="/" element={ <Home /> }></Route>
+                            <Route path="/" element={ <Cryptocurrency /> }></Route>
                             <Route path="blog" element={ <Blog /> } />
                             <Route path="/profile" element={ <Profile /> } />
-                            <Route path="/listings" element={ <Cryptocurrency /> } />
+                            <Route path="/feed" element={ <Home /> } />
                         </Route>
 
                     </Routes>
