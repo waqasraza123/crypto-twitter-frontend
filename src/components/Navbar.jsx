@@ -1,27 +1,30 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
-import {useSelector} from "react-redux";
+import {AuthStateContext} from "../context/context";
 
 const Navbar = () => {
 
-    const user = useSelector(state => state.user);
+    const user = useContext(AuthStateContext)
+    const name = user.userDetails.name || ""
 
     //normal function
     //returns other components conditionally
     function handleAuthButtons() {
 
-        if(user.isLoggedIn){
-            return <ProfileButton user={user} />
+        if(user){
+            return <ProfileButton />
         }else{
             return <AuthButtons />
         }
     }
 
     //functional component
-    function ProfileButton(props){
+    function ProfileButton(){
         return (
             <button className="btn btn-outline-success btn-success">
-                <Link className="text-decoration-none text-white" to="/profile">{props.user.name || "Profile"}</Link>
+                <Link className="text-decoration-none text-white" to="/profile">
+                    {name}
+                </Link>
             </button>
         );
     }
@@ -32,9 +35,6 @@ const Navbar = () => {
             <>
                 <button type="button" className="btn btn-outline-light me-2">
                     <Link className="text-decoration-none" to="/login">Login</Link>
-                </button>
-                <button type="button" className="btn btn-primary me-2">
-                    <Link className="text-decoration-none text-white" to="/register">Register</Link>
                 </button>
             </>
         );

@@ -24,7 +24,6 @@ const Feed = () => {
                 })
 
                 //update state
-                console.log(response.data)
                 setFeed(response.data)
 
             }catch (error){
