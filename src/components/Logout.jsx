@@ -1,17 +1,18 @@
 import React, {useContext} from "react";
 import {logout} from "../context";
 import {AuthDispatchContext} from "../context/context";
-import {redirect} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Logout = () => {
 
     const authDispatchContext = useContext(AuthDispatchContext)
+    const navigate = useNavigate()
 
     async function handleLogout() {
         try {
             let response = await logout(authDispatchContext)
             if (response){
-                return redirect("/")
+                navigate("/")
             }
         }catch (error){
             console.log(error)

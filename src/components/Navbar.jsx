@@ -11,7 +11,7 @@ const Navbar = () => {
     //returns other components conditionally
     function handleAuthButtons() {
 
-        if(user){
+        if(name){
             return <ProfileButton />
         }else{
             return <AuthButtons />
@@ -33,8 +33,8 @@ const Navbar = () => {
     function AuthButtons(){
         return (
             <>
-                <button type="button" className="btn btn-outline-light me-2">
-                    <Link className="text-decoration-none" to="/login">Login</Link>
+                <button type="button" className="btn btn-success btn-sm me-2">
+                    <Link className="text-decoration-none text-white" to="/login">Login</Link>
                 </button>
             </>
         );

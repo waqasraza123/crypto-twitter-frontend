@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import {Link, redirect} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {AuthDispatchContext} from "../context/context";
 import {loginUser} from "../context";
 import {toast} from "react-toastify";
@@ -13,6 +13,7 @@ const Login = () => {
 
     //dispatch is used in reducers to update the state
     const authDispatchContext = useContext(AuthDispatchContext);
+    const navigate = useNavigate()
 
 
     /**
@@ -30,8 +31,11 @@ const Login = () => {
         }
 
         try{
-            await loginUser(authDispatchContext, payload)
-            toast.success("Log in successful, Redirecting.")
+            const response = await loginUser(authDispatchContext, payload)
+            if (response){
+                toast.success("Log in successful, Redirecting.")
+                navigate("/")
+            }
         }catch (error){
             toast.error(error.message)
         }

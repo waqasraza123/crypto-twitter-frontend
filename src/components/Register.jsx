@@ -3,7 +3,7 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {redirect} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const REDUCER_ACTIONS = {
     "UPDATE_NAME": "updateName",
@@ -13,6 +13,7 @@ const REDUCER_ACTIONS = {
 
 const Register = () => {
 
+    const navigate = useNavigate()
     const initialState = {
         name: '',
         email: '',
@@ -91,7 +92,7 @@ const Register = () => {
             if(response){
                 localStorage.setItem("user", JSON.stringify(response.data));
                 toast.success("Successfully Registered!")
-                return redirect("/")
+                navigate("/")
             }
 
        //catch the error
