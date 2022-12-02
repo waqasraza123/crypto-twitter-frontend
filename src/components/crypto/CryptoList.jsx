@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem}) => {
+const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem, setMeta}) => {
 
     const apiBaseURL = process.env.REACT_APP_BASE_API_URL
     const path = "/crypto/meta"
@@ -11,16 +11,16 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem})
      * @param show
      * @param cryptoName
      */
-    function handleClick(show, cryptoName){
+    function handleClick(show, currencyId, currencyName){
 
         //set current currency for modal
-        setCurrentItem(cryptoName)
+        setCurrentItem(currencyName)
 
         //show modal
         setModalShow(show)
 
         //get meta deta for the selected currency
-        getMeta(cryptoName).then(error  => console.log(error))
+        getMeta(currencyId).then(error  => console.log(error))
     }
 
 
@@ -29,18 +29,18 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem})
      * @param slug
      * @returns {Promise<void>}
      */
-    async function getMeta(slug){
-        console.log("getMeta called")
+    async function getMeta(currencyId){
+
         try {
             const response = await axios.get( apiBaseURL + path, {
                 params:{
-                    slug: slug
+                    currencyId: currencyId
                 }
             })
 
             if(response){
-                const currency = response.data.data[1]
-                console.log(currency.description)
+                const currency = response.data.data[currencyId]
+                setMeta(currency)
             }
 
         }catch (error){
@@ -68,7 +68,6 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem})
 
             <tbody>
 
-
             {
                 listings === null ?
                 <tr><td>Loading...</td></tr> :
@@ -81,7 +80,7 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem})
                                     {item.id}
                                 </td>
                                 <td>
-                                    <a className="text-decoration-none" onClick={() => handleClick(true, item.slug)} href="#"> {item.name} - <span className="text-muted fw-lighter">{item.symbol}</span></a>
+                                    <a className="text-decoration-none" onClick={() => handleClick(true, item.id, item.name)} href="#"> {item.name} - <span className="text-muted fw-lighter">{item.symbol}</span></a>
                                 </td>
                                 <td>
                                     ${num.price.toLocaleString()}

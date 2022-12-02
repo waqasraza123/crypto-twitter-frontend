@@ -53,11 +53,13 @@ const Cryptocurrency = () => {
             <h1 className="text-center my-4">Consuming Coinmarketcap API</h1>
             <CryptoMeta show={modalShow}
                         currentitem={currentitem}
+                        meta={meta}
                         onHide={() => setModalShow(false)} />
 
             <CryptoList listings={listings}
                         percentageClasses={percentageClasses}
                         setCurrentItem={setCurrentItem}
+                        setMeta={setMeta}
                         setModalShow={setModalShow} />
         </>
     );
