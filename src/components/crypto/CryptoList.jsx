@@ -19,6 +19,10 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem, 
         //show modal
         setModalShow(show)
 
+        //empty the meta state before
+        //fetching new information
+        setMeta({})
+
         //get meta deta for the selected currency
         getMeta(currencyId).then(error  => console.log(error))
     }

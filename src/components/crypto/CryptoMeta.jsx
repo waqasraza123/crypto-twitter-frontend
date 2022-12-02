@@ -12,13 +12,13 @@ const CryptoMeta = (props) => {
             centered>
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    {props.meta.name}
+                    {props.meta.name || "Loading..."}
                     <img src={props.meta.logo} width="40px" height="40px" className="mx-2"/>
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <p>
-                    {props.meta.description}
+                    {props.meta.description || "Loading..."}
                 </p>
                 <h4>Tags</h4>
                 {
