@@ -41,7 +41,7 @@ const PostForm = ({setPosts}) => {
     return(
         <>
             <ToastContainer />
-            <form className="post-form" onSubmit={ (e) => handleSubmit(e)}>
+            <form className="post-form my-5" onSubmit={ (e) => handleSubmit(e)}>
                 <div className="mb-3">
                     <input className="form-control"
                         name="title" value={title}

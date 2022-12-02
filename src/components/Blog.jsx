@@ -35,12 +35,20 @@ const Blog = () => {
     return (
         <div className="container">
             <ToastContainer />
-            <PostForm setPosts={setPosts} />
-            {
-                posts.map(post => {
-                    return <Post key={post._id} title={post.title} content={post.content} />
-                })
-            }
+            <div className="row">
+                <div className="col"></div>
+                <div className="col-6">
+                    <PostForm setPosts={setPosts} />
+                    <div className="my-2">
+                        {
+                            posts.map(post => {
+                                return <Post key={post._id} title={post.title} content={post.content} />
+                            })
+                        }
+                    </div>
+                </div>
+                <div className="col"></div>
+            </div>
         </div>
     );
 }

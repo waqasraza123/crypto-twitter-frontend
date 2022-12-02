@@ -60,7 +60,7 @@ const Navbar = () => {
                     </a>
 
                     <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                        <NavbarItem text="Twitter API" path="/feed"/>
+                        <NavbarItem text="Tweet" path="/feed"/>
                         <NavbarItem text="Blog" path="/blog"/>
                     </ul>
 
