@@ -9,7 +9,7 @@ const TweetForm = ({setFeed}) => {
     const [tweet, setTweet] = useState("");
     const url = process.env.REACT_APP_BASE_API_URL
     const path = "/tweets"
-    const userId = 1
+    const userId = JSON.parse(localStorage.getItem("user"))._id
 
     async function saveTweet(e){
         e.preventDefault();

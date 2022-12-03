@@ -11,7 +11,7 @@ const Blog = () => {
     const [posts, setPosts] = useState([])
     const url = process.env.REACT_APP_BASE_API_URL
     const path = "/posts"
-    const userId = 1
+    const userId = JSON.parse(localStorage.getItem("user"))._id
 
     //on mount
     useEffect(() => {
@@ -42,7 +42,7 @@ const Blog = () => {
                     <div className="my-2">
                         {
                             posts.map(post => {
-                                return <Post key={post._id} title={post.title} content={post.content} />
+                                return <Post key={post._id} post={post} />
                             })
                         }
                     </div>

@@ -7,9 +7,9 @@ const PostForm = ({setPosts}) => {
 
     const [title, setTitle] = useState("")
     const [postContent, setPostContent] = useState("")
-    const userId = 1
     const url = process.env.REACT_APP_BASE_API_URL
     const path = "/posts"
+    const userId = JSON.parse(localStorage.getItem("user"))._id
 
     async function handleSubmit(e){
         e.preventDefault()
