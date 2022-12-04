@@ -1,5 +1,6 @@
 import axios from "axios";
 import {redirect} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const url = process.env.REACT_APP_BASE_API_URL;
 const path = "/auth/login";
@@ -35,7 +36,8 @@ export async function loginUser(dispatch, loginPayload){
 
     //catch errors
     }catch (error){
-        console.log(error.message);
+        toast.error(error.response.data.message)
+        console.log(error.response.data.message)
     }
 }
 
