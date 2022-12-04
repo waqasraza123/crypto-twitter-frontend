@@ -23,7 +23,7 @@ const Navbar = () => {
         return (
             <button className="btn btn-outline-success btn-success">
                 <Link className="text-decoration-none text-white" to="/profile">
-                    {name}
+                    My Profile
                 </Link>
             </button>
         );

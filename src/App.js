@@ -6,7 +6,7 @@ import Register from "./components/Register";
 import Navbar from "./components/Navbar";
 import Cryptocurrency from "./components/Cryptocurrency";
 import Footer from "./components/Footer";
-import Profile from "./components/Profile";
+import Profile from "./components/profile/Profile";
 import Blog from "./components/Blog";
 import Home from "./components/Home";
 import {AuthProvider} from "./context";
