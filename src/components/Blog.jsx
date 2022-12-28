@@ -1,29 +1,29 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PostForm from "./blog/PostForm";
 import axios from "axios";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 import Post from "./blog/Post";
-
+import {AuthStateContext} from "../context/context";
 
 //top level component for blog
 const Blog = () => {
 
     const [posts, setPosts] = useState([])
     const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/posts"
-    const userId = JSON.parse(localStorage.getItem("user"))._id
+    const path = "/api/blog/posts"
+    const token = useContext(AuthStateContext).token
 
     //on mount
     useEffect(() => {
 
         const getPosts = async () => {
             const response = await axios.get(url + path, {
-                params: {
-                    userId: userId,
+                headers: {
+                    "Authorization": "Bearer " + token
                 }
             })
-
-            //set posts and merge with current
+            console.log(response)
+            //set posts
             setPosts(response.data)
         }
 
@@ -32,22 +32,16 @@ const Blog = () => {
 
     }, []) //runs on mount
 
+
     return (
-        <div className="container">
-            <ToastContainer />
-            <div className="row">
-                <div className="col"></div>
-                <div className="col-6">
-                    <PostForm setPosts={setPosts} />
-                    <div className="my-2">
-                        {
-                            posts.map(post => {
-                                return <Post key={post._id} post={post} />
-                            })
-                        }
-                    </div>
-                </div>
-                <div className="col"></div>
+        <div>
+            <PostForm setPosts={setPosts} />
+            <div>
+                {
+                    posts.length ? posts.map(post => {
+                        return <Post key={post.id} post={post} />
+                    }) : "Loading"
+                }
             </div>
         </div>
     );

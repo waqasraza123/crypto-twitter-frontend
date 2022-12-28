@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import CryptoList from "./crypto/CryptoList";
 import CryptoMeta from "./crypto/CryptoMeta";
+import {AuthStateContext} from "../context/context";
 
 /**
  * Listings Class to list all the available crypto
@@ -12,22 +13,27 @@ const Cryptocurrency = () => {
     const [modalShow, setModalShow] = useState(false)
     const [currentitem, setCurrentItem] = useState({})
     const [meta, setMeta] = useState({})
+    const token = useContext(AuthStateContext).token
 
     async function getAll() {
 
-        const path = "/crypto/all";
+        const path = "/api/crypto/all";
         const url = process.env.REACT_APP_BASE_API_URL;
 
         //call the server for data
         try{
-            const response = await axios.get(url + path)
+            const response = await axios.get(url + path, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
 
             //update state
             setListings(response.data.data)
 
             //error - failed to fetch
         }catch (err){
-            console.log(err.response.status);
+            console.log(err);
         }
     }
 

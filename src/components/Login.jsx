@@ -36,10 +36,10 @@ const Login = () => {
                 toast.success("Log in successful, Redirecting.")
                 navigate("/")
             }
+
         }catch (error){
             toast.error(error.message)
         }
-
     }
 
     return (

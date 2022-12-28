@@ -1,15 +1,16 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {AuthStateContext} from "../../context/context";
 
 const PostForm = ({setPosts}) => {
 
     const [title, setTitle] = useState("")
     const [postContent, setPostContent] = useState("")
     const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/posts"
-    const userId = JSON.parse(localStorage.getItem("user"))._id
+    const path = "/api/blog/posts"
+    const token = useContext(AuthStateContext).token
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -18,7 +19,10 @@ const PostForm = ({setPosts}) => {
             const response = await axios.post(url + path, {
                 title: title,
                 content: postContent,
-                userId: userId
+            },{
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
             })
 
             //post is saved
@@ -26,6 +30,7 @@ const PostForm = ({setPosts}) => {
             //reset the state
             setTitle("")
             setPostContent("")
+            console.log(response.data.post)
 
             //update posts state in parent and merge with new data
             setPosts(prev => {

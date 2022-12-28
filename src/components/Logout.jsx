@@ -12,7 +12,7 @@ const Logout = () => {
         try {
             let response = await logout(authDispatchContext)
             if (response){
-                navigate("/")
+                navigate("/login")
             }
         }catch (error){
             console.log(error)

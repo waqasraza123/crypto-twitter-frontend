@@ -10,6 +10,8 @@ import Profile from "./components/profile/Profile";
 import Blog from "./components/Blog";
 import Home from "./components/Home";
 import {AuthProvider} from "./context";
+import SinglePost from "./components/blog/SinglePost";
+import BlogLayout from "./components/layout/BlogLayout";
 
 /**
  * Root level component to host all the
@@ -28,9 +30,16 @@ export default class App extends Component {
 
                         <Route element={ <ProtectedRoutes /> }>
                             <Route path="/" element={ <Cryptocurrency /> }></Route>
-                            <Route path="blog" element={ <Blog /> } />
+
                             <Route path="/profile" element={ <Profile /> } />
-                            <Route path="/feed" element={ <Home /> } />
+
+                            <Route element={<BlogLayout />} >
+                                <Route path="blog" element={ <Blog /> } />
+                                <Route path="blog/post/:id" element={ <SinglePost /> } />
+
+                                <Route path="/feed" element={ <Home /> } />
+                            </Route>
+
                         </Route>
 
                     </Routes>

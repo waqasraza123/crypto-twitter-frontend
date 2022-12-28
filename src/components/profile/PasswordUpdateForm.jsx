@@ -7,14 +7,14 @@ const PasswordUpdateForm = () => {
 
     const initialState = {
         password: "",
-        confirmPassword: "",
+        password_confirmation: "",
         oldPassword: ""
     }
 
     const [state, setState] = useState(initialState)
     const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/users/password"
-    const email = useContext(AuthStateContext).userDetails.email
+    const path = "/api/user-profile/password"
+    const token = useContext(AuthStateContext).token
 
     function handleInputChange(e){
         const {name, value} = e.target
@@ -31,16 +31,28 @@ const PasswordUpdateForm = () => {
             const response = await axios.post(url + path, {
                 "password": state.password,
                 "oldPassword": state.oldPassword,
-                "email": email
+                "password_confirmation": state.password_confirmation
+            }, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
             })
 
             if (response){
+                console.log(response)
+                //reset state
+                setState(initialState)
+
+                //show success toast
                 toast.success(response.data.message)
             }
 
         }catch (error){
             console.log(error)
-            toast.error(error.response.data.message)
+            const validationFailedMessages = error.response.data.errors
+            for (let key in validationFailedMessages) {
+                toast.error(validationFailedMessages[key][0])
+            }
         }
     }
 
@@ -57,9 +69,9 @@ const PasswordUpdateForm = () => {
                 </div>
 
                 <div className="form-floating mb-3">
-                    <input type="password" className="form-control" name="confirmPassword"
+                    <input type="password" className="form-control" name="password_confirmation"
                            onChange={(e) => handleInputChange(e)}
-                           value={state.confirmPassword} />
+                           value={state.password_confirmation} />
                     <label className="form-label">Confirm New Password</label>
                 </div>
 

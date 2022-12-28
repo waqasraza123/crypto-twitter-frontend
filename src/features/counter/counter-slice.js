@@ -9,7 +9,6 @@ const counterSlice = createSlice({
     initialState,
     reducers: {
         increment(state){
-            console.log("I am being called");
             //immer lib under the hood makes it immutable
             state.value += 1;
         }

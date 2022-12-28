@@ -1,5 +1,6 @@
 import React from "react";
 import UserInfo from "../partials/UserInfo";
+import {Link} from "react-router-dom";
 
 const Post = ({post}) => {
 
@@ -9,7 +10,7 @@ const Post = ({post}) => {
             <div className="container-fluid py-5">
                 <h1 className="display-5 fw-bold">{post.title}</h1>
                 <p className="col-md-8 fs-4">{post.content}</p>
-                <button className="btn btn-primary btn-lg" type="button">Read More</button>
+                <Link to={`/blog/post/${post.id}`} className="btn btn-primary btn-lg" type="button">Read More</Link>
             </div>
         </div>
     );

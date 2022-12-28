@@ -8,7 +8,8 @@ import {useNavigate} from "react-router-dom";
 const REDUCER_ACTIONS = {
     "UPDATE_NAME": "updateName",
     "UPDATE_EMAIL": "updateEmail",
-    "UPDATE_PASSWORD": "updatePassword"
+    "UPDATE_PASSWORD": "updatePassword",
+    "UPDATE_USERNAME": "updateUsername"
 }
 
 const Register = () => {
@@ -17,6 +18,7 @@ const Register = () => {
     const initialState = {
         name: '',
         email: '',
+        username: '',
         password: '',
     };
 
@@ -38,6 +40,11 @@ const Register = () => {
                 return {
                     ...initialState,
                     password: action.payload
+                }
+            case REDUCER_ACTIONS.UPDATE_USERNAME:
+                return {
+                    ...initialState,
+                    username: action.payload
                 }
             default:
                 return "Action not handled."
@@ -65,6 +72,13 @@ const Register = () => {
         })
     }
 
+    function setUsername(e){
+        dispatch({
+            type: REDUCER_ACTIONS.UPDATE_USERNAME,
+            payload: e.target.value
+        })
+    }
+
     /**
      * register user
      * required:
@@ -76,29 +90,36 @@ const Register = () => {
         const name = state.name;
         const email = state.email;
         const password = state.password;
+        const username = state.username;
         const baseUrl = process.env.REACT_APP_BASE_API_URL;
-        const path = "/auth/register";
+        const path = "/api/register";
 
 
         // Create user with email and pass.
         try{
+            //make request to fetch the data
             const response =
                 await axios.post(baseUrl + path, {
                     "name": name,
                     "email": email,
+                    "username": username,
                     "password": password
                 });
 
-            if(response){
-                localStorage.setItem("user", JSON.stringify(response.data));
+            if(response && response.message){
+                toast.error(response.message)
+            }else{
+                localStorage.setItem("user", JSON.stringify(response.data.user));
                 toast.success("Successfully Registered!")
                 navigate("/")
             }
 
        //catch the error
         }catch (err){
-            toast.error(err.response.data.message)
-            console.log(err.message);
+            const validationFailedMessages = err.response.data.errors
+            for (let key in validationFailedMessages) {
+                toast.error(validationFailedMessages[key][0])
+            }
         }
 
     }
@@ -117,6 +138,15 @@ const Register = () => {
                                onChange={(e) => setName(e)}
                         />
                         <label htmlFor="registerName">Name</label>
+                    </div>
+
+                    <div className="form-floating">
+                        <input type="text" className="form-control"
+                               placeholder="Username"
+                               value={state.username}
+                               onChange={(e) => setUsername(e)}
+                        />
+                        <label>Username</label>
                     </div>
 
                     <div className="form-floating">

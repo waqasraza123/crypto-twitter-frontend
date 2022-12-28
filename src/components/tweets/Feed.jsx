@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import TweetForm from "./TweetForm";
 import axios from "axios";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Tweet from "./Tweet";
+import {AuthStateContext} from "../../context/context";
 
 const Feed = () => {
 
@@ -11,7 +12,7 @@ const Feed = () => {
 
     const url = process.env.REACT_APP_BASE_API_URL
     const path = "/tweets"
-    const userId = JSON.parse(localStorage.getItem("user"))._id
+    const userId = useContext(AuthStateContext).userDetails._id
 
     useEffect(() => {
 
@@ -25,6 +26,7 @@ const Feed = () => {
 
                 //update state
                 setFeed(response.data)
+                console.log(response.data)
 
             }catch (error){
                 toast.error(error.message)

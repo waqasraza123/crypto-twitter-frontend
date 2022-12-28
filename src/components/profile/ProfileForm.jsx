@@ -1,19 +1,14 @@
-import React, {useState} from "react"
+import React, {useContext, useState} from "react"
 import axios from "axios";
+import {AuthStateContext} from "../../context/context";
 
 const ProfileForm = ({user}) => {
 
-    const initialState = {
-        "name": user.name || "",
-        "email": user.email || "",
-        "username": user.username || "",
-        "bio": user.bio || ""
-    }
-
-    const [state, setState] = useState(initialState)
+    const [state, setState] = useState(user)
     const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/users/user"
+    const path = "/api/user-profile"
     const formData = new FormData()
+    const token = useContext(AuthStateContext).token
 
     function handleInputChange(event){
         const {name, value} = event.target
@@ -39,13 +34,17 @@ const ProfileForm = ({user}) => {
 
         //send axios request to server
         try {
-            const response = await axios.post(url + path, formData)
+            const response = await axios.post(url + path, formData, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
             if (response){
                 console.log(response)
             }
         //handle errors
         }catch (error){
-            console.log(error.message)
+            console.log(error)
         }
 
     }
@@ -85,8 +84,7 @@ const ProfileForm = ({user}) => {
 
             <div className="form-floating mb-3">
                 <input type="file" className="form-control" name="photo"
-                    onChange={handleFileChange}
-                    value={state.photo} />
+                    onChange={handleFileChange} />
                 <label>Photo</label>
             </div>
 

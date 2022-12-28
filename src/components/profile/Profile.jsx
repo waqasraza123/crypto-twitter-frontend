@@ -1,16 +1,39 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Logout from "../Logout";
 import logo from "../../logo.svg"
 import {AuthStateContext} from "../../context/context";
 import ProfileForm from "./ProfileForm";
 import PasswordUpdateForm from "./PasswordUpdateForm";
+import axios from "axios";
 
 const Profile = () => {
 
-    const user = useContext(AuthStateContext).userDetails
+    const authUser = useContext(AuthStateContext).userDetails
+    const [user, setCurrentUser] = useState(authUser)
     const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/uploads/"
-    const profileImageUrl = user.photo !== "" ? url + path + user.photo : logo
+    const path = "/api/user-profile"
+    const imagesPath = "/images/"
+    const profileImageUrl = user.photo !== "" ? url + imagesPath + user.photo : logo
+    const token = useContext(AuthStateContext).token
+
+    useEffect(() => {
+        const getUserProfile = async () => {
+            const response = await axios.get(url + path, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+
+            if(response){
+                setCurrentUser(response.data.user)
+            }
+        }
+
+        //call the fn and catch errors
+        getUserProfile().catch(error => {
+            console.log(error)
+        })
+    }, [])
 
     return (
         <div className="container my-5">

@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import axios from "axios";
+import {AuthStateContext} from "../../context/context";
 
 const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem, setMeta}) => {
 
     const apiBaseURL = process.env.REACT_APP_BASE_API_URL
-    const path = "/crypto/meta"
+    const path = "/api/crypto/meta/"
+    const token = useContext(AuthStateContext).token
 
     /**
      * handle click on the table/list item
@@ -36,9 +38,9 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem, 
     async function getMeta(currencyId){
 
         try {
-            const response = await axios.get( apiBaseURL + path, {
-                params:{
-                    currencyId: currencyId
+            const response = await axios.get( apiBaseURL + path + currencyId, {
+                headers: {
+                    "Authorization": "Bearer " + token
                 }
             })
 
@@ -52,7 +54,9 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem, 
         }
     }
 
+
     return(
+
         <table className="table table-hover">
 
             <thead>
@@ -73,7 +77,7 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem, 
             <tbody>
 
             {
-                listings === null ?
+                listings === undefined ?
                 <tr><td>Loading...</td></tr> :
                 listings.map(
                     (item) => {

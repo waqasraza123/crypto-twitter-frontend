@@ -6,7 +6,7 @@ const UserInfo = ({item}) => {
     return(
         <>
             <p className="text-center">{item.author.name}</p>
-            <p className="text-center">Posted {moment(item.createdAt).fromNow()}</p>
+            <p className="text-center">Posted {moment(item.created_at).fromNow()}</p>
             <button className="btn btn-sm btn-success">follow</button>
         </>
     )

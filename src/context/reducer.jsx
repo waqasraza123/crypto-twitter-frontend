@@ -21,14 +21,14 @@ export const authReducer = (initialState, action) => {
         case "LOGIN":
             return {
                 ...initialState,
-                user: action.payload.user,
-                token: action.payload.auth_token,
+                userDetails: action.payload.user,
+                token: action.payload.user.accessToken,
                 loading: false
             }
         case "LOGOUT":
             return {
                 ...initialState,
-                user: "",
+                userDetails: "",
                 token: ""
             }
 

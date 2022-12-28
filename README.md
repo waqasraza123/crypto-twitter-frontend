@@ -18,5 +18,7 @@
 # Screenshots
 - https://ibb.co/fqNKD0w
 - https://ibb.co/S7ytqBX
+- https://ibb.co/wBDKQSq
+- https://ibb.co/b3k4CHx
 
 ####
