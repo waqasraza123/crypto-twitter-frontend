@@ -11,22 +11,22 @@ const Feed = () => {
     const [feed, setFeed] = useState([])
 
     const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/tweets"
-    const userId = useContext(AuthStateContext).userDetails._id
+    const path = "/api/tweets"
+    const token = useContext(AuthStateContext).token
 
     useEffect(() => {
 
         async function getTweets(){
             try{
                 const response = await axios.get(url + path, {
-                    params: {
-                        "userId" :userId
+                    headers:{
+                        "Authorization": "Bearer " + token
                     }
                 })
 
                 //update state
-                setFeed(response.data)
-                console.log(response.data)
+                setFeed(response.data.tweets)
+                console.log(response)
 
             }catch (error){
                 toast.error(error.message)

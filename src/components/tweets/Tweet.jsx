@@ -43,7 +43,7 @@ const Tweet = ({tweet}) => {
         <div className="p-5 mb-4 mt-4 bg-light rounded-3">
             <UserInfo item={tweet} />
             <div className="container-fluid py-2">
-                <p className="col fs-4">{tweet.content}</p>
+                <p className="col fs-4 text-wrap text-break">{tweet.tweet}</p>
                 <div className="comment mb-5">
                     <form onSubmit={handleComment}>
                         <div className="container">
