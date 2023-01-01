@@ -6,8 +6,9 @@
 - Email/Password Login with API tokens
 
 # Crypto
+- using coinmarketcap rest api
 - shows latest cryptocurrencies
-- using coinmarketcap rest api - free version
+- shows meta info for each currency
 
 # Blog Page
 - Create a post   

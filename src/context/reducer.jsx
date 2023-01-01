@@ -33,6 +33,13 @@ export const authReducer = (initialState, action) => {
                 token: action.payload.accessToken,
                 loading: false
             }
+        case "GOOGLE_LOGIN":
+            return {
+                ...initialState,
+                userDetails: action.payload,
+                token: action.payload.accessToken,
+                loading: false
+            }
         case "LOGOUT":
             return {
                 ...initialState,

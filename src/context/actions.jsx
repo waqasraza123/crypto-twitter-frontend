@@ -98,3 +98,30 @@ export async function githubLogin(dispatch, payload){
         console.log(error)
     }
 }
+
+/**
+ *
+ * @param dispatch
+ * @param payload
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export async function googleLogin(dispatch, payload){
+    const path = "/api/auth/callback/google"
+    try{
+        const response = await axios.get(url + path + payload.location)
+        //user logged in
+        if(response){
+            //dispatch the LOGIN action for reducer
+            dispatch({
+                type: "GOOGLE_LOGIN",
+                payload: response.data.user
+            })
+
+            //save the user in local
+            localStorage.setItem("user", JSON.stringify(response.data.user))
+            return response
+        }
+    }catch (error){
+        console.log(error)
+    }
+}

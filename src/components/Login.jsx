@@ -11,7 +11,12 @@ const Login = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [githubLoginUrl, setGithubLoginUrl] = useState("")
+    const initialState = {
+        "googleUrl": "",
+        "githubUrl": "",
+        "twitterUrl": ""
+    }
+    const [socialLoginUrls, setSocialLoginUrls] = useState(initialState)
 
     //dispatch is used in reducers to update the state
     const authDispatchContext = useContext(AuthDispatchContext);
@@ -21,17 +26,28 @@ const Login = () => {
     useEffect(() => {
         /**
          * returns github redirect url
-         * @returns {Promise<void>}
          */
         async function getGithubLoginUrl(){
             const path = "/api/auth/redirect/github"
             try {
                 const response = await axios.get(url + path)
-                setGithubLoginUrl(response.data)
+                setSocialLoginUrls({...socialLoginUrls, githubUrl: response.data})
             }catch (error){console.log(error)}
         }
 
+        /**
+         * returns google redirect url
+         */
+        async function getGoogleLoginUrl(){
+            const path = "/api/auth/redirect/google"
+            try{
+                const response = await axios.get(url + path)
+                setSocialLoginUrls({...socialLoginUrls, googleUrl: response.data})
+            }catch(error){console.log(error)}
+        }
+
         getGithubLoginUrl().catch(error => console.log(error))
+        getGoogleLoginUrl().catch(error => console.log(error))
     }, [])
 
     /**
@@ -92,8 +108,14 @@ const Login = () => {
                     <Link className="text-decoration-none" to="/register">Not a user? Sign-up Here</Link>
                 </button>
                 <p className="text-center my-2">OR</p>
-                <a href={githubLoginUrl} className="w-100 btn btn-lg btn-secondary mt-2"
+                <a href={socialLoginUrls.githubUrl} className="w-100 btn btn-lg btn-secondary mt-2"
                    type="button">Login with GitHub</a>
+
+                <a href={socialLoginUrls.googleUrl} className="w-100 btn btn-lg btn-outline-dark mt-2"
+                   type="button">Login with Google</a>
+
+                <a href={socialLoginUrls.twitterUrl} className="w-100 btn btn-lg btn-outline-success mt-2"
+                   type="button">Login with Twitter</a>
             </main>
         </>
     );
