@@ -4,13 +4,12 @@ import {AuthStateContext} from "../context/context";
 
 const Navbar = () => {
 
-    const user = useContext(AuthStateContext)
-    const name = user.userDetails.name || ""
+    const user = useContext(AuthStateContext).userDetails
 
     //normal function
     //returns other components conditionally
     function handleAuthButtons() {
-        if(name){
+        if(Object.keys(user).length){
             return <ProfileButton />
         }else{
             return <AuthButtons />
@@ -22,7 +21,7 @@ const Navbar = () => {
         return (
             <button className="btn btn-outline-success btn-success">
                 <Link className="text-decoration-none text-white" to="/profile">
-                    My Profile
+                    {user.name}
                 </Link>
             </button>
         );

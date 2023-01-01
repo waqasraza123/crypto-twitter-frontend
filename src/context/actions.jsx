@@ -1,7 +1,5 @@
 import axios from "axios";
 import {toast} from "react-toastify"
-import {useContext} from "react";
-import {AuthStateContext} from "./context";
 
 const url = process.env.REACT_APP_BASE_API_URL
 const path = "/api/login"
@@ -42,6 +40,11 @@ export async function loginUser(dispatch, loginPayload){
     }
 }
 
+/**
+ *
+ * @param dispatch
+ * @returns {Promise<AxiosResponse<any>>}
+ */
 export async function logout(dispatch){
 
     const token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).accessToken : ""
@@ -64,6 +67,33 @@ export async function logout(dispatch){
         localStorage.removeItem("user")
         return response
 
+    }catch (error){
+        console.log(error)
+    }
+}
+
+/**
+ *
+ * @param dispatch
+ * @param payload
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export async function githubLogin(dispatch, payload){
+    const path = "/api/auth/callback/github"
+    try{
+        const response = await axios.get(url + path + payload.location)
+        //user logged in
+        if(response){
+            //dispatch the LOGIN action for reducer
+            dispatch({
+                type: "GITHUB_LOGIN",
+                payload: response.data.user
+            })
+
+            //save the user in local
+            localStorage.setItem("user", JSON.stringify(response.data.user))
+            return response
+        }
     }catch (error){
         console.log(error)
     }

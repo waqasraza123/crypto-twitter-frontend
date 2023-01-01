@@ -12,6 +12,7 @@ import {AuthProvider} from "./context";
 import SinglePost from "./components/blog/SinglePost";
 import BlogLayout from "./components/layout/BlogLayout";
 import Feed from "./components/tweets/Feed";
+import GithubLogin from "./components/socialLogin/GithubLogin";
 
 /**
  * Root level component to host all the
@@ -27,6 +28,7 @@ export default class App extends Component {
                     <Routes>
                         <Route path="login" element={ <Login /> } />
                         <Route path="register" element={ <Register /> } />
+                        <Route path="auth/callback/github" element={ <GithubLogin /> } />
 
                         <Route element={ <ProtectedRoutes /> }>
                             <Route path="/" element={ <Cryptocurrency /> }></Route>

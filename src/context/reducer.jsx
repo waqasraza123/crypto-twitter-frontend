@@ -17,6 +17,7 @@ export const initialState = {
  *
  */
 export const authReducer = (initialState, action) => {
+
     switch (action.type){
         case "LOGIN":
             return {
@@ -25,11 +26,19 @@ export const authReducer = (initialState, action) => {
                 token: action.payload.user.accessToken,
                 loading: false
             }
+        case "GITHUB_LOGIN":
+            return {
+                ...initialState,
+                userDetails: action.payload,
+                token: action.payload.accessToken,
+                loading: false
+            }
         case "LOGOUT":
             return {
                 ...initialState,
                 userDetails: "",
-                token: ""
+                token: "",
+                loading: false
             }
 
         default:
