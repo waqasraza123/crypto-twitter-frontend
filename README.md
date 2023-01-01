@@ -1,7 +1,9 @@
 # Tech Stack
-- Frontend - Reactjs & Bootstrap   
-- Backend - ExpressJs/NodeJs & Firebase  
-- with JWT authentication
+- Main - Reactjs v18 & Bootstrap v5
+
+# Authentication
+- Social Login via github, google, twitter
+- Email/Password Login with API tokens
 
 # Crypto
 - shows latest cryptocurrencies

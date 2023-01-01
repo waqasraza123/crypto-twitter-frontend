@@ -13,7 +13,7 @@ const Profile = () => {
     const url = process.env.REACT_APP_BASE_API_URL
     const path = "/api/user-profile"
     const imagesPath = "/images/"
-    const profileImageUrl = user.photo !== "" ? url + imagesPath + user.photo : logo
+    const profileImageUrl = user.photo !== null ? url + imagesPath + user.photo : logo
     const token = useContext(AuthStateContext).token
 
     useEffect(() => {
