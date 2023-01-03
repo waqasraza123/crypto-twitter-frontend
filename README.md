@@ -1,5 +1,8 @@
 # Tech Stack
 - Main - Reactjs v18 & Bootstrap v5
+- Backend:
+- Nodejs, Expressjs
+- Laravel
 
 # Authentication
 - Social Login via github, google, twitter

@@ -7,8 +7,8 @@ const CommentForm = ({post, type, setComments}) => {
 
     const [comment, setComment] = useState("")
     const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/api/comments"
     const token = useContext(AuthStateContext).token
+    const path = "/api/comments"
 
     //submit the form
     const handleSubmit = async (e) => {

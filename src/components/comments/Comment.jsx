@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment/moment";
 
 const Comment = ({comment}) => {
+
     return (
         <div className="row">
             <div className="col-3">

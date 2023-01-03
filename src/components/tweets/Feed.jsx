@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
-import TweetForm from "./TweetForm";
-import axios from "axios";
+import {AuthStateContext} from "../../context/context";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import TweetForm from "./TweetForm";
 import Tweet from "./Tweet";
-import {AuthStateContext} from "../../context/context";
+import axios from "axios";
 
 const Feed = () => {
 
@@ -43,7 +43,7 @@ const Feed = () => {
             <TweetForm setFeed={setFeed} />
             {
                 feed.map((tweet, index) => {
-                    return (<Tweet tweet={tweet} key={index} />)
+                    return (<Tweet tweet={tweet} tweetComments={tweet.comments} key={index} />)
                 })
             }
         </>

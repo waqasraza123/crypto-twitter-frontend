@@ -2,59 +2,53 @@ import React, {useContext, useEffect, useState} from "react";
 import UserInfo from "../partials/UserInfo";
 import CommentForm from "../comments/CommentForm";
 import {AuthStateContext} from "../../context/context";
-import axios from "axios";
 import Comment from "../comments/Comment";
+import {toast} from "react-toastify";
+import axios from "axios";
 
-const Tweet = ({tweet}) => {
+const Tweet = ({tweet, tweetComments}) => {
 
-    const path = "/api/likes"
-    const url = process.env.REACT_APP_BASE_API_URL
+    const [likedObject, setLikedObject] = useState({liked: false, classes: "btn-warning"})
     const [comments, setComments] = useState([])
-    const [likedButtonText, setLikeButtonText] = useState("Like")
-    const [likeButtonClasses, setLikeButtonClasses] = useState("btn-warning")
-    const postType = "tweets"
-    const id = tweet.id
     const token = useContext(AuthStateContext).token
+    const url = process.env.REACT_APP_BASE_API_URL
+    const postType = "tweets"
 
     useEffect(() => {
-        getComments().catch(error => console.log(error))
+
+        //set the like status for current user && current tweet
+        tweet?.liked_by_current_user === null ?
+            setLikedObject({classes: "btn-warning", liked: false}):
+            setLikedObject({classes: "btn-success", liked: true})
+
+        setComments(tweetComments)
     }, [])
 
-    /**
-     * get the comments of this post
-     * @returns {Promise<void>}
-     */
-    const getComments = async () => {
-        const commentsPath = "/api/comments/post/" + id + "/" + postType
-
-        try{
-            const response = await axios.get(url + commentsPath, {
-                headers: { "Authorization": "Bearer " + token }
-            })
-            //set comments
-            setComments(response.data.comments)
-        }catch (error){ console.log(error) }
-    }
 
     /**
-     *
-     * @returns {Promise<void>}
+     * save the like to db
      */
     async function handleLikeAction(){
 
-        //update the button state
-        setLikeButtonText("Liked")
-        setLikeButtonClasses("btn-success")
+        const path = "/api/likes"
 
         try {
-            const response = await axios.post(url + path, {
+            const response = await axios.post(url + path, {tweet_id: tweet.id},{
+                headers:{"Authorization": "Bearer " + token}
             })
 
-            if(response){
-                console.log(response)
-            }
+            //show toast message
+            response?.data?.message && toast.success(response?.data?.message)
+
+            //set liked object
+            const liked = response?.data?.liked
+            liked === true ? setLikedObject({classes: "btn-success", liked: true}):
+                setLikedObject({classes: "btn-warning", liked: false})
 
         }catch (error){
+            //toggle the liked status between false/true
+            //toggle the liked status between false/true
+            setLikedObject({classes: "btn-warning", liked: false})
             console.log(error.message)
         }
     }
@@ -77,9 +71,9 @@ const Tweet = ({tweet}) => {
                     }
                 </div>
                 <button className="btn btn-warning btn-sm mx-1" type="button">Comment</button>
-                <button className={"btn btn-sm mx-1 " + likeButtonClasses}
+                <button className={"btn btn-sm mx-1 " + likedObject.classes}
                         onClick={handleLikeAction}
-                        type="button">{likedButtonText}</button>
+                        type="button">{likedObject.liked === true ? "Liked" : "Like"}</button>
                 <button className="btn btn-warning btn-sm mx-1" type="button">Show Thread</button>
             </div>
         </div>

@@ -8,9 +8,9 @@ import Comment from "../comments/Comment";
 
 const SinglePost = (props) => {
 
-    const [post, setPost] = useState({})
     const [comments, setComments] = useState([])
     const token = useContext(AuthStateContext).token
+    const [post, setPost] = useState({})
     const url = process.env.REACT_APP_BASE_API_URL
     const path = "/api/blog/post/"
     const { id } = useParams()
@@ -27,32 +27,12 @@ const SinglePost = (props) => {
                 headers: { "Authorization": "Bearer " + token }
             })
             setPost(response.data.post)
+            response?.data?.post?.comments ? setComments(response.data.post.comments) : setComments([])
         }catch (error){ console.log(error) }
-    }
-
-
-    /**
-     * get the comments of this post
-     * @returns {Promise<void>}
-     */
-    const getComments = async () => {
-        const commentsPath = "/api/comments/post/" + id + "/" + postType
-
-        try{
-            const response = await axios.get(url + commentsPath, {
-                headers: { "Authorization": "Bearer " + token }
-            })
-
-            //set comments
-            setComments(response.data.comments)
-        }catch (error){
-            console.log(error)
-        }
     }
 
     useEffect(() => {
         getPost(id).catch(error => console.log(error))
-        getComments().catch(error => console.log(error))
     }, [])
 
     return (
@@ -65,7 +45,7 @@ const SinglePost = (props) => {
                     <article className="blog-post">
                         <h2 className="blog-post-title mb-1">{post.title}</h2>
                         <p className="blog-post-meta">{moment(post.created_at).format("LLLL")} by <a
-                            href="#">{post.author.name}</a></p>
+                            href="#">{post.user.name}</a></p>
                         <p>{post.content}</p>
                     </article>
                     <div className="commentForm">
