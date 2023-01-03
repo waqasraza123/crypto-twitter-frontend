@@ -12,6 +12,7 @@ const CommentForm = ({post, type, setComments}) => {
 
     //submit the form
     const handleSubmit = async (e) => {
+        console.log(comment)
         e.preventDefault()
 
         try {

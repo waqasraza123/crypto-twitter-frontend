@@ -21,7 +21,7 @@ const Navbar = () => {
         return (
             <button className="btn btn-outline-success btn-success">
                 <Link className="text-decoration-none text-white" to="/profile">
-                    {user.name}
+                    {user.name + " " + user.balance}
                 </Link>
             </button>
         );
@@ -57,6 +57,7 @@ const Navbar = () => {
                         <NavbarItem text="Cryptocurrencies" path="/"/>
                         <NavbarItem text="Tweet" path="/feed"/>
                         <NavbarItem text="Blog" path="/blog"/>
+                        <NavbarItem text="Subscriptions" path="/subscriptions"/>
                     </ul>
 
                     <div className="text-end">

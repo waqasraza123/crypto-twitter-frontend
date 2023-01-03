@@ -14,7 +14,6 @@ const Login = () => {
     const initialState = {
         "googleUrl": "",
         "githubUrl": "",
-        "twitterUrl": ""
     }
     const [socialLoginUrls, setSocialLoginUrls] = useState(initialState)
 
@@ -31,7 +30,10 @@ const Login = () => {
             const path = "/api/auth/redirect/github"
             try {
                 const response = await axios.get(url + path)
-                setSocialLoginUrls({...socialLoginUrls, githubUrl: response.data})
+                setSocialLoginUrls(prevState => ({
+                    ...prevState,
+                    "githubUrl": response.data
+                }))
             }catch (error){console.log(error)}
         }
 
@@ -42,7 +44,10 @@ const Login = () => {
             const path = "/api/auth/redirect/google"
             try{
                 const response = await axios.get(url + path)
-                setSocialLoginUrls({...socialLoginUrls, googleUrl: response.data})
+                setSocialLoginUrls(prevState => ({
+                    ...prevState,
+                    "googleUrl": response.data
+                }))
             }catch(error){console.log(error)}
         }
 
@@ -113,9 +118,6 @@ const Login = () => {
 
                 <a href={socialLoginUrls.googleUrl} className="w-100 btn btn-lg btn-outline-dark mt-2"
                    type="button">Login with Google</a>
-
-                <a href={socialLoginUrls.twitterUrl} className="w-100 btn btn-lg btn-outline-success mt-2"
-                   type="button">Login with Twitter</a>
             </main>
         </>
     );

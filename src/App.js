@@ -14,6 +14,8 @@ import BlogLayout from "./components/layout/BlogLayout";
 import Feed from "./components/tweets/Feed";
 import GithubLogin from "./components/socialLogin/GithubLogin";
 import GoogleLogin from "./components/socialLogin/GoogleLogin";
+import Subscription from "./components/subscriptions/Subscription";
+import PaymentMethod from "./components/payments/PaymentMethod";
 
 /**
  * Root level component to host all the
@@ -40,9 +42,11 @@ export default class App extends Component {
                             <Route element={<BlogLayout />} >
                                 <Route path="blog" element={ <Blog /> } />
                                 <Route path="blog/post/:id" element={ <SinglePost /> } />
-
                                 <Route path="/feed" element={ <Feed /> } />
                             </Route>
+
+                            <Route path="subscriptions" element={ <Subscription /> } />
+                            <Route path="payment-method" element={ <PaymentMethod /> } />
 
                         </Route>
 

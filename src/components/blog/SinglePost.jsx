@@ -14,30 +14,29 @@ const SinglePost = (props) => {
     const url = process.env.REACT_APP_BASE_API_URL
     const path = "/api/blog/post/"
     const { id } = useParams()
+    const postType = "blogs"
 
-    /*
-    get the post from api
+    /**
+     * get current post
+     * @param postId
+     * @returns {Promise<void>}
      */
     const getPost = async (postId) => {
-        console.log("I will be called again")
         try{
             const response = await axios.get(url + path + postId, {
                 headers: { "Authorization": "Bearer " + token }
             })
-
             setPost(response.data.post)
-
-        }catch (error){
-            console.log(error)
-        }
+        }catch (error){ console.log(error) }
     }
 
 
-    /*
-    get the comments of this post
+    /**
+     * get the comments of this post
+     * @returns {Promise<void>}
      */
     const getComments = async () => {
-        const commentsPath = "/api/comments/post/" + id
+        const commentsPath = "/api/comments/post/" + id + "/" + postType
 
         try{
             const response = await axios.get(url + commentsPath, {
@@ -49,7 +48,6 @@ const SinglePost = (props) => {
         }catch (error){
             console.log(error)
         }
-
     }
 
     useEffect(() => {
@@ -72,14 +70,14 @@ const SinglePost = (props) => {
                     </article>
                     <div className="commentForm">
                         <CommentForm post={post} type="blogs" setComments={setComments} />
-                        <h1>Previous Comments</h1>
+                        <h1 className="text-center">Previous Comments</h1>
                         {
                             Object.keys(comments).length > 0 ?
                                 comments.map(comment => {
                                     return <Comment key={comment.id} comment={comment} />
                                 })
                                 :
-                                "No comments..."
+                                <p className="text-center">"No comments..."</p>
                         }
                     </div>
                 </div>

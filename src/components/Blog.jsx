@@ -10,8 +10,8 @@ const Blog = () => {
 
     const [posts, setPosts] = useState([])
     const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/api/blog/posts"
     const token = useContext(AuthStateContext).token
+    const path = "/api/blog/posts"
 
     //on mount
     useEffect(() => {
