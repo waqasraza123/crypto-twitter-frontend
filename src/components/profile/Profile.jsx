@@ -5,15 +5,14 @@ import {AuthStateContext} from "../../context/context";
 import ProfileForm from "./ProfileForm";
 import PasswordUpdateForm from "./PasswordUpdateForm";
 import axios from "axios";
+import UserImage from "../partials/UserImage";
 
 const Profile = () => {
 
     const authUser = useContext(AuthStateContext).userDetails
     const [user, setCurrentUser] = useState(authUser)
-    const url = process.env.REACT_APP_BASE_API_URL
     const path = "/api/user-profile"
-    const imagesPath = "/images/"
-    const profileImageUrl = user.photo !== null ? url + imagesPath + user.photo : logo
+    const url = process.env.REACT_APP_BASE_API_URL
     const token = useContext(AuthStateContext).token
 
     useEffect(() => {
@@ -40,7 +39,7 @@ const Profile = () => {
             <div className="row">
                 <div className="col">
                     <div>
-                        <img src={profileImageUrl} width="150px" height="150px"/>
+                        <UserImage photo={user.photo} width="150px" height="150px"/>
                     </div>
                     <div className="mt-5">
                         <Logout />

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import UserInfo from "../partials/UserInfo";
-import CommentForm from "../comments/CommentForm";
 import {AuthStateContext} from "../../context/context";
+import CommentForm from "../comments/CommentForm";
+import UserInfo from "../partials/UserInfo";
 import Comment from "../comments/Comment";
 import {toast} from "react-toastify";
 import axios from "axios";
@@ -29,9 +29,7 @@ const Tweet = ({tweet, tweetComments}) => {
      * save the like to db
      */
     async function handleLikeAction(){
-
         const path = "/api/likes"
-
         try {
             const response = await axios.post(url + path, {tweet_id: tweet.id},{
                 headers:{"Authorization": "Bearer " + token}
@@ -47,7 +45,6 @@ const Tweet = ({tweet, tweetComments}) => {
 
         }catch (error){
             //toggle the liked status between false/true
-            //toggle the liked status between false/true
             setLikedObject({classes: "btn-warning", liked: false})
             console.log(error.message)
         }
@@ -57,7 +54,7 @@ const Tweet = ({tweet, tweetComments}) => {
         <div className="p-5 mb-4 mt-4 bg-light rounded-3">
             <UserInfo item={tweet} />
             <div className="container-fluid py-2">
-                <p className="col fs-4 text-wrap text-break">{tweet.tweet}</p>
+                <p className="col offset-2 fs-4 text-wrap text-break">{tweet.tweet}</p>
                 <div className="comment mb-5">
                     <CommentForm post={tweet} type={postType} setComments={setComments} />
                     <h1 className="text-center">Previous Comments</h1>
