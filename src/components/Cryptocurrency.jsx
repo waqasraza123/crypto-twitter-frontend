@@ -1,8 +1,10 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import axios from "axios";
 import CryptoList from "./crypto/CryptoList";
 import CryptoMeta from "./crypto/CryptoMeta";
 import {AuthStateContext} from "../context/context";
+import {useQuery} from "react-query";
+import LoadingIcon from "./partials/LoadingIcon";
 
 /**
  * Listings Class to list all the available crypto
@@ -37,10 +39,6 @@ const Cryptocurrency = () => {
         }
     }
 
-    useEffect(() => {
-        getAll().catch(error => console.log(error))
-    }, [])
-
     /**
      * returns red or green class to
      * indicate +ve or -ve change
@@ -52,6 +50,21 @@ const Cryptocurrency = () => {
             return "text-danger";
         }
         return "text-success";
+    }
+
+    const {isLoading, isError, error, data} = useQuery({
+        queryKey: ["cryptocurrencies"],
+        queryFn: getAll
+    })
+
+    //loading state
+    if(isLoading){
+        return <LoadingIcon />
+    }
+
+    //error while fetching data
+    if(isError){
+        return <p className="alert alert-danger">{error.message}</p>
     }
 
     return(

@@ -1,5 +1,6 @@
 # Tech Stack
-- Main - Reactjs v18 & Bootstrap v5
+- Main - Reactjs v18 & Bootstrap v5  
+  [React Query - useQuery](https://tanstack.com/)
 - Backend:
 - Nodejs, Expressjs
 - Laravel

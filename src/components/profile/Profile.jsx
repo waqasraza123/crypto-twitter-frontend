@@ -6,6 +6,8 @@ import ProfileForm from "./ProfileForm";
 import PasswordUpdateForm from "./PasswordUpdateForm";
 import axios from "axios";
 import UserImage from "../partials/UserImage";
+import LoadingIcon from "../partials/LoadingIcon";
+import {useQuery} from "react-query";
 
 const Profile = () => {
 
@@ -15,24 +17,31 @@ const Profile = () => {
     const url = process.env.REACT_APP_BASE_API_URL
     const token = useContext(AuthStateContext).token
 
-    useEffect(() => {
-        const getUserProfile = async () => {
+    const getUserProfile = async () => {
+        try{
             const response = await axios.get(url + path, {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
+                headers: {"Authorization": "Bearer " + token}
             })
+            const user = response?.data?.user
+            setCurrentUser(user)
+            return user
+        }catch (error){ return error }
+    }
 
-            if(response){
-                setCurrentUser(response.data.user)
-            }
-        }
+    const {isLoading, isError, error, data} = useQuery({
+        queryKey: ["userProfile"],
+        queryFn: getUserProfile
+    })
 
-        //call the fn and catch errors
-        getUserProfile().catch(error => {
-            console.log(error)
-        })
-    }, [])
+    //loading state
+    if(isLoading){
+        return <LoadingIcon />
+    }
+
+    //error while fetching data
+    if(isError){
+        return <p className="alert alert-danger">{error.message}</p>
+    }
 
     return (
         <div className="container my-5">

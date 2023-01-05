@@ -16,6 +16,10 @@ import GithubLogin from "./components/socialLogin/GithubLogin";
 import GoogleLogin from "./components/socialLogin/GoogleLogin";
 import Subscription from "./components/subscriptions/Subscription";
 import PaymentMethod from "./components/payments/PaymentMethod";
+import SingleTweet from "./components/tweets/SingleTweet";
+import {QueryClient, QueryClientProvider} from "react-query";
+
+const queryClient = new QueryClient()
 
 /**
  * Root level component to host all the
@@ -25,6 +29,7 @@ export default class App extends Component {
 
     render() {
         return (
+            <QueryClientProvider client={queryClient}>
             <AuthProvider>
                 <div className="root-container">
                     <Navbar />
@@ -43,6 +48,7 @@ export default class App extends Component {
                                 <Route path="blog" element={ <Blog /> } />
                                 <Route path="blog/post/:id" element={ <SinglePost /> } />
                                 <Route path="/feed" element={ <Feed /> } />
+                                <Route path="/tweet/:id" element={ <SingleTweet /> } />
                             </Route>
 
                             <Route path="subscriptions" element={ <Subscription /> } />
@@ -55,6 +61,7 @@ export default class App extends Component {
                     <Footer />
                 </div>
             </AuthProvider>
+            </QueryClientProvider>
         );
     }
 

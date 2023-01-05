@@ -1,18 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import {AuthStateContext} from "../../context/context";
-import CommentForm from "../comments/CommentForm";
 import UserInfo from "../partials/UserInfo";
-import Comment from "../comments/Comment";
 import {toast} from "react-toastify";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
-const Tweet = ({tweet, tweetComments}) => {
+const Tweet = ({tweet}) => {
 
     const [likedObject, setLikedObject] = useState({liked: false, classes: "btn-warning"})
-    const [comments, setComments] = useState([])
     const token = useContext(AuthStateContext).token
     const url = process.env.REACT_APP_BASE_API_URL
-    const postType = "tweets"
 
     useEffect(() => {
 
@@ -21,7 +18,6 @@ const Tweet = ({tweet, tweetComments}) => {
             setLikedObject({classes: "btn-warning", liked: false}):
             setLikedObject({classes: "btn-success", liked: true})
 
-        setComments(tweetComments)
     }, [])
 
 
@@ -51,29 +47,21 @@ const Tweet = ({tweet, tweetComments}) => {
     }
 
     return(
-        <div className="p-5 mb-4 mt-4 bg-light rounded-3">
-            <UserInfo item={tweet} />
-            <div className="container-fluid py-2">
-                <p className="col offset-2 fs-4 text-wrap text-break">{tweet.tweet}</p>
-                <div className="comment mb-5">
-                    <CommentForm post={tweet} type={postType} setComments={setComments} />
-                    <h1 className="text-center">Previous Comments</h1>
-                    {
-                        Object.keys(comments).length > 0 ?
-                            comments.map(comment => {
-                                return <Comment key={comment.id} comment={comment} />
-                            })
-                            :
-                            <p className="text-center">"No comments..."</p>
-                    }
+        // <Link to={`/tweet/${tweet.id}`}>
+            <div className="p-5 mb-4 mt-4 bg-light rounded-3">
+                <UserInfo item={tweet} />
+                <div className="container-fluid py-2">
+                    <p className="col offset-2 fs-4 text-wrap text-break">{tweet.tweet}</p>
+                    <button className="btn btn-warning btn-sm mx-1" type="button">Comment</button>
+                    <button className={"btn btn-sm mx-1 " + likedObject.classes}
+                            onClick={handleLikeAction}
+                            type="button">{likedObject.liked === true ? "Liked" : "Like"}</button>
+                    <Link to={`/tweet/${tweet.id}`}>
+                        <button className="btn btn-warning btn-sm mx-1" type="button">Show Thread</button>
+                    </Link>
                 </div>
-                <button className="btn btn-warning btn-sm mx-1" type="button">Comment</button>
-                <button className={"btn btn-sm mx-1 " + likedObject.classes}
-                        onClick={handleLikeAction}
-                        type="button">{likedObject.liked === true ? "Liked" : "Like"}</button>
-                <button className="btn btn-warning btn-sm mx-1" type="button">Show Thread</button>
             </div>
-        </div>
+        //</Link>
     );
 }
 

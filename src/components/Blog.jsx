@@ -1,9 +1,10 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import PostForm from "./blog/PostForm";
 import axios from "axios";
-import {toast} from "react-toastify";
 import Post from "./blog/Post";
 import {AuthStateContext} from "../context/context";
+import {useQuery} from "react-query";
+import LoadingIcon from "./partials/LoadingIcon";
 
 //top level component for blog
 const Blog = () => {
@@ -13,26 +14,35 @@ const Blog = () => {
     const token = useContext(AuthStateContext).token
     const path = "/api/blog/posts"
 
-    //on mount
-    useEffect(() => {
-
-        const getPosts = async () => {
+    //call the api
+    const getPosts = async () => {
+        try{
             const response = await axios.get(url + path, {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
+                headers: {"Authorization": "Bearer " + token}
             })
-            console.log(response)
             //set posts
-            setPosts(response.data)
-        }
+            setPosts(response?.data)
+            return response?.data
+        }catch (error) {return error}
+    }
 
-        //call the function
-        getPosts().catch(error => toast.error(error.message))
+    //get the data from the api using react query
+    const {isLoading, isError, error, isSuccess, data} = useQuery({
+        queryKey: ["blogPosts"],
+        queryFn: getPosts
+    })
 
-    }, []) //runs on mount
+    //loading state
+    if(isLoading){
+        return <LoadingIcon />
+    }
 
+    //error while fetching data
+    if(isError){
+        return <p className="alert alert-danger">{error.message}</p>
+    }
 
+    //data returned successfully
     return (
         <div>
             <PostForm setPosts={setPosts} />
