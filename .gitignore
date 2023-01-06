@@ -25,3 +25,4 @@ yarn-error.log*
 #custom files to ignore
 ./src/firebase.jsx
 .env
+.idea
