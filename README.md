@@ -25,6 +25,9 @@
 - create comments
 - like/unlike tweets
 
+# Caching
+- Using [TranStack React Query](https://tanstack.com/) to cache the data
+
 # Screenshots
 - https://ibb.co/fqNKD0w
 - https://ibb.co/S7ytqBX
