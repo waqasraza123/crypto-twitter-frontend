@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import {useParams} from "react-router-dom";
 import axios from "axios";
-import {useQuery} from "react-query";
+import {useQuery} from "@tanstack/react-query";
 import {AuthStateContext} from "../../context/context";
 import CommentForm from "../comments/CommentForm";
 import Comment from "../comments/Comment";

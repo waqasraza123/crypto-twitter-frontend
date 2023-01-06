@@ -3,7 +3,7 @@ import axios from "axios";
 import CryptoList from "./crypto/CryptoList";
 import CryptoMeta from "./crypto/CryptoMeta";
 import {AuthStateContext} from "../context/context";
-import {useQuery} from "react-query";
+import {useQuery} from "@tanstack/react-query";
 import LoadingIcon from "./partials/LoadingIcon";
 
 /**
@@ -11,16 +11,13 @@ import LoadingIcon from "./partials/LoadingIcon";
  */
 const Cryptocurrency = () => {
 
-    const [listings, setListings] = useState([])
-    const [modalShow, setModalShow] = useState(false)
-    const [currentitem, setCurrentItem] = useState({})
-    const [meta, setMeta] = useState({})
+    const [showModal, setShowModal] = useState(false)
+    const [cryptoMeta, setCryptoMeta] = useState({})
     const token = useContext(AuthStateContext).token
+    const path = "/api/crypto/all";
+    const url = process.env.REACT_APP_BASE_API_URL;
 
     async function getAll() {
-
-        const path = "/api/crypto/all";
-        const url = process.env.REACT_APP_BASE_API_URL;
 
         //call the server for data
         try{
@@ -29,31 +26,15 @@ const Cryptocurrency = () => {
                     "Authorization": "Bearer " + token
                 }
             })
-
-            //update state
-            setListings(response.data.data)
-
-            //error - failed to fetch
-        }catch (err){
-            console.log(err);
+            return response?.data?.data
+        }catch (error){
+            console.log(error);
+            return error
         }
-    }
-
-    /**
-     * returns red or green class to
-     * indicate +ve or -ve change
-     * @param number
-     * @returns {string}
-     */
-    function percentageClasses(number){
-        if(number < 0){
-            return "text-danger";
-        }
-        return "text-success";
     }
 
     const {isLoading, isError, error, data} = useQuery({
-        queryKey: ["cryptocurrencies"],
+        queryKey: ["allCryptocurrencies"],
         queryFn: getAll
     })
 
@@ -70,16 +51,10 @@ const Cryptocurrency = () => {
     return(
         <>
             <h1 className="text-center my-4">Consuming Coinmarketcap API</h1>
-            <CryptoMeta show={modalShow}
-                        currentitem={currentitem}
-                        meta={meta}
-                        onHide={() => setModalShow(false)} />
-
-            <CryptoList listings={listings}
-                        percentageClasses={percentageClasses}
-                        setCurrentItem={setCurrentItem}
-                        setMeta={setMeta}
-                        setModalShow={setModalShow} />
+            <CryptoMeta setShowModal = {setShowModal}
+                        show = {showModal}
+                        meta = {cryptoMeta} />
+            <CryptoList listings={data} setShowModal={setShowModal} setCryptoMeta={setCryptoMeta} />
         </>
     );
 }

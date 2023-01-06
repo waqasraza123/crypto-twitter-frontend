@@ -51,14 +51,16 @@ const Tweet = ({tweet}) => {
             <div className="p-5 mb-4 mt-4 bg-light rounded-3">
                 <UserInfo item={tweet} />
                 <div className="container-fluid py-2">
-                    <p className="col offset-2 fs-4 text-wrap text-break">{tweet.tweet}</p>
-                    <button className="btn btn-warning btn-sm mx-1" type="button">Comment</button>
-                    <button className={"btn btn-sm mx-1 " + likedObject.classes}
-                            onClick={handleLikeAction}
-                            type="button">{likedObject.liked === true ? "Liked" : "Like"}</button>
-                    <Link to={`/tweet/${tweet.id}`}>
-                        <button className="btn btn-warning btn-sm mx-1" type="button">Show Thread</button>
-                    </Link>
+                    <p className="col fs-4 offset-2 text-wrap text-break">{tweet.tweet}</p>
+                    <div className="offset-2 tweet-buttons">
+                        <button className="btn btn-warning btn-sm mx-1" type="button">Comment</button>
+                        <button className={"btn btn-sm mx-1 " + likedObject.classes}
+                                onClick={handleLikeAction}
+                                type="button">{likedObject.liked === true ? "Liked" : "Like"}</button>
+                        <Link to={`/tweet/${tweet.id}`}>
+                            <button className="btn btn-warning btn-sm mx-1" type="button">Show Thread</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         //</Link>

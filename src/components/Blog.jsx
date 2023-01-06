@@ -3,7 +3,7 @@ import PostForm from "./blog/PostForm";
 import axios from "axios";
 import Post from "./blog/Post";
 import {AuthStateContext} from "../context/context";
-import {useQuery} from "react-query";
+import {useQuery} from "@tanstack/react-query";
 import LoadingIcon from "./partials/LoadingIcon";
 
 //top level component for blog

@@ -1,64 +1,12 @@
-import React, {useContext} from "react";
-import axios from "axios";
-import {AuthStateContext} from "../../context/context";
+import React from "react";
+import SingleCrypto from "./SingleCrypto";
+import LoadingIcon from "../partials/LoadingIcon";
 
-const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem, setMeta}) => {
-
-    const apiBaseURL = process.env.REACT_APP_BASE_API_URL
-    const path = "/api/crypto/meta/"
-    const token = useContext(AuthStateContext).token
-
-    /**
-     * handle click on the table/list item
-     * @param show
-     * @param cryptoName
-     */
-    function handleClick(show, currencyId, currencyName){
-
-        //set current currency for modal
-        setCurrentItem(currencyName)
-
-        //show modal
-        setModalShow(show)
-
-        //empty the meta state before
-        //fetching new information
-        setMeta({})
-
-        //get meta deta for the selected currency
-        getMeta(currencyId).then(error  => console.log(error))
-    }
-
-
-    /**
-     * fetches the data from server
-     * @param slug
-     * @returns {Promise<void>}
-     */
-    async function getMeta(currencyId){
-
-        try {
-            const response = await axios.get( apiBaseURL + path + currencyId, {
-                headers: {
-                    "Authorization": "Bearer " + token
-                }
-            })
-
-            if(response){
-                const currency = response.data.data[currencyId]
-                setMeta(currency)
-            }
-
-        }catch (error){
-            console.log(error)
-        }
-    }
-
+const CryptoList = ({listings, setShowModal, setCryptoMeta}) => {
 
     return(
 
         <table className="table table-hover">
-
             <thead>
             <tr>
                 <th scope="col">#</th>
@@ -77,41 +25,11 @@ const CryptoList = ({listings, percentageClasses, setModalShow, setCurrentItem, 
             <tbody>
 
             {
-                listings === undefined ?
-                <tr><td>Loading...</td></tr> :
-                listings.map(
-                    (item) => {
-                        let num = item.quote.USD;
-                        return (
-                            <tr className="fs-6" key={item.id}>
-                                <td>
-                                    {item.id}
-                                </td>
-                                <td>
-                                    <a className="text-decoration-none" onClick={() => handleClick(true, item.id, item.name)} href="#"> {item.name} - <span className="text-muted fw-lighter">{item.symbol}</span></a>
-                                </td>
-                                <td>
-                                    ${num.price.toLocaleString()}
-                                </td>
-                                <td className={percentageClasses(num.percent_change_24h)}>
-                                    {num.percent_change_24h.toFixed(2)}%
-                                </td>
-                                <td className={percentageClasses(num.percent_change_7d)}>
-                                    {num.percent_change_7d.toFixed(2)}%
-                                </td>
-                                <td className={percentageClasses(num.percent_change_30d)}>
-                                    {num.percent_change_30d.toFixed(2)}%
-                                </td>
-                                <td>
-                                    ${num.market_cap.toLocaleString()}
-                                </td>
-                                <td>
-                                    ${num.volume_24h.toLocaleString()}
-                                </td>
-                                <td>View Charts</td>
-                                <td>View Markets</td>
-                            </tr>
-                        )
+                listings === undefined ? <LoadingIcon /> :
+                listings.map(item => {
+                        return <SingleCrypto item={item} key={item.id}
+                                 setCryptoMeta={setCryptoMeta}
+                                 setShowModal={setShowModal} />
                     }
                 )
             }

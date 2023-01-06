@@ -17,7 +17,7 @@ import GoogleLogin from "./components/socialLogin/GoogleLogin";
 import Subscription from "./components/subscriptions/Subscription";
 import PaymentMethod from "./components/payments/PaymentMethod";
 import SingleTweet from "./components/tweets/SingleTweet";
-import {QueryClient, QueryClientProvider} from "react-query";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 const queryClient = new QueryClient()
 

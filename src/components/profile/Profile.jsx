@@ -7,7 +7,7 @@ import PasswordUpdateForm from "./PasswordUpdateForm";
 import axios from "axios";
 import UserImage from "../partials/UserImage";
 import LoadingIcon from "../partials/LoadingIcon";
-import {useQuery} from "react-query";
+import {useQuery} from "@tanstack/react-query";
 
 const Profile = () => {
 
