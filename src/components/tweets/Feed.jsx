@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import TweetForm from "./TweetForm";
 import Tweet from "./Tweet";
 import axios from "axios";
+import {useQuery} from "@tanstack/react-query";
+import LoadingIcon from "../partials/LoadingIcon";
 
 const Feed = () => {
 
@@ -14,36 +16,46 @@ const Feed = () => {
     const path = "/api/tweets"
     const token = useContext(AuthStateContext).token
 
-    useEffect(() => {
+    const {isLoading, isError, error, data} = useQuery({
+        queryKey: ["tweets"],
+        queryFn: getTweets
+    })
 
-        async function getTweets(){
-            try{
-                const response = await axios.get(url + path, {
-                    headers:{
-                        "Authorization": "Bearer " + token
-                    }
-                })
+    async function getTweets(){
+        try{
+            const response = await axios.get(url + path, {
+                headers:{
+                    "Authorization": "Bearer " + token
+                }
+            })
 
-                //update state
-                setFeed(response.data.tweets)
-                console.log(response)
+            //update state
+            const tweets = response?.data?.tweets
+            setFeed(tweets)
+            console.log(response)
+            return tweets
 
-            }catch (error){
-                toast.error(error.message)
-            }
+        }catch (error){
+            toast.error(error.message)
+            return error
         }
+    }
 
-        getTweets().catch(error => toast.error(error.message))
+    if(isLoading){
+        return <LoadingIcon />
+    }
 
-    }, [])//on mount
+    if(isError){
+        return <p className="alert alert-danger">{error.message}</p>
+    }
 
     return(
         <>
             <ToastContainer />
             <TweetForm setFeed={setFeed} />
             {
-                feed.map((tweet, index) => {
-                    return (<Tweet tweet={tweet} tweetComments={tweet.comments} key={index} />)
+                feed.map(tweet => {
+                    return (<Tweet tweet={tweet} tweetComments={tweet.comments} key={tweet.id} />)
                 })
             }
         </>

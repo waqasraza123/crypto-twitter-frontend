@@ -28,6 +28,9 @@
 # Caching
 - Using [TranStack React Query](https://tanstack.com/) to cache the data
 
+# Extras
+- [React Loader Spinner](https://github.com/mhnpd/react-loader-spinner)
+
 # Screenshots
 - https://ibb.co/fqNKD0w
 - https://ibb.co/S7ytqBX

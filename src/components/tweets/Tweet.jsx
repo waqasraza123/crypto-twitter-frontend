@@ -7,14 +7,18 @@ import {Link} from "react-router-dom";
 
 const Tweet = ({tweet}) => {
 
-    const [likedObject, setLikedObject] = useState({liked: false, classes: "btn-warning"})
+    const [likedObject, setLikedObject] = useState(
+        {
+            liked: false,
+            classes: "btn-warning"
+        })
     const token = useContext(AuthStateContext).token
     const url = process.env.REACT_APP_BASE_API_URL
 
     useEffect(() => {
 
         //set the like status for current user && current tweet
-        tweet?.liked_by_current_user === null ?
+        tweet?.liked_by_current_user === false ?
             setLikedObject({classes: "btn-warning", liked: false}):
             setLikedObject({classes: "btn-success", liked: true})
 
@@ -53,10 +57,12 @@ const Tweet = ({tweet}) => {
                 <div className="container-fluid py-2">
                     <p className="col fs-4 offset-2 text-wrap text-break">{tweet.tweet}</p>
                     <div className="offset-2 tweet-buttons">
-                        <button className="btn btn-warning btn-sm mx-1" type="button">Comment</button>
+                        <button className="btn btn-warning btn-sm mx-1" type="button">Comment {tweet.comments_count}</button>
                         <button className={"btn btn-sm mx-1 " + likedObject.classes}
                                 onClick={handleLikeAction}
-                                type="button">{likedObject.liked === true ? "Liked" : "Like"}</button>
+                                type="button">{likedObject.liked === true ? "Liked" : "Like"}
+                                {" " + tweet.likes_count}
+                        </button>
                         <Link to={`/tweet/${tweet.id}`}>
                             <button className="btn btn-warning btn-sm mx-1" type="button">Show Thread</button>
                         </Link>

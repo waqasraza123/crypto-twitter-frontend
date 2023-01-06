@@ -9,11 +9,11 @@ const BlogLayout = () => {
             <div className="container my-2">
                 <ToastContainer />
                 <div className="row">
-                    <div className="col">Sidebar Left</div>
+                    <div className="col"></div>
                     <div className="col-6">
                         <Outlet />
                     </div>
-                    <div className="col">Sidebar Right</div>
+                    <div className="col"></div>
                 </div>
             </div>
         </>

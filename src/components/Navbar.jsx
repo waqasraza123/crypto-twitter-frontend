@@ -6,8 +6,6 @@ const Navbar = () => {
 
     const user = useContext(AuthStateContext).userDetails
 
-    //normal function
-    //returns other components conditionally
     function handleAuthButtons() {
         if(Object.keys(user).length){
             return <ProfileButton />

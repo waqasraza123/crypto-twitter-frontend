@@ -38,14 +38,15 @@ const SingleCrypto = ({item, setCryptoMeta, setShowModal}) => {
 
     //handle item click
     function handleClick(){
+
+        //empty the old meta info
+        setCryptoMeta({})
+
         //fetch the meta now
         refetch()
 
         //show modal
         setShowModal(true)
-
-        //empty the old meta info
-        setCryptoMeta({})
     }
 
     //render function

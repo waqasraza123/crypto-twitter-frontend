@@ -37,6 +37,7 @@ const TweetForm = ({setFeed}) => {
             })
             //update state
             setTweet("")
+            setCharacterCount(0)
 
         }catch (error){
             const validationFailedMessages = error.response.data.errors
