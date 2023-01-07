@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SearchBar from "../SearchBar";
 import {AuthStateContext} from "../../context/context";
 
-const TweetForm = ({setFeed}) => {
+const TweetForm = ({refetchFeed}) => {
 
     const [tweet, setTweet] = useState("");
     const [characterCount, setCharacterCount] = useState(0)
@@ -31,10 +31,10 @@ const TweetForm = ({setFeed}) => {
             //tweet is saved
             toast.success(response.data.message)
             console.log(response)
-            //update feed state
-            setFeed(prev => {
-                return [response.data.tweet, ...prev]
-            })
+
+            //refetch query
+            refetchFeed()
+
             //update state
             setTweet("")
             setCharacterCount(0)

@@ -4,32 +4,32 @@ import axios from "axios";
 import Post from "./blog/Post";
 import {AuthStateContext} from "../context/context";
 import {useQuery} from "@tanstack/react-query";
-import LoadingIcon from "./partials/LoadingIcon";
+import LoadingIcon, {ColorRingLoadingIcon} from "./partials/LoadingIcon";
+import {toast} from "react-toastify";
+import PaginationClassic from "./partials/PaginationClassic";
 
 //top level component for blog
 const Blog = () => {
 
-    const [posts, setPosts] = useState([])
     const url = process.env.REACT_APP_BASE_API_URL
     const token = useContext(AuthStateContext).token
     const path = "/api/blog/posts"
+    const [pageParam, setPageParam] = useState(1)
 
     //call the api
     const getPosts = async () => {
         try{
-            const response = await axios.get(url + path, {
+            const response = await axios.get(url + path + "?page=" + pageParam, {
                 headers: {"Authorization": "Bearer " + token}
             })
-            //set posts
-            setPosts(response?.data)
             return response?.data
         }catch (error) {return error}
     }
 
     //get the data from the api using react query
-    const {isLoading, isError, error, isSuccess, data} = useQuery({
-        queryKey: ["blogPosts"],
-        queryFn: getPosts
+    const {isLoading, isError, error, isSuccess, data, refetch} = useQuery({
+        queryKey: ["blogPosts", pageParam],
+        queryFn: () => getPosts(pageParam)
     })
 
     //loading state
@@ -39,20 +39,23 @@ const Blog = () => {
 
     //error while fetching data
     if(isError){
-        return <p className="alert alert-danger">{error.message}</p>
+        toast.error(error.message)
     }
+
+    if(isSuccess){console.log(data)}
 
     //data returned successfully
     return (
         <div>
-            <PostForm setPosts={setPosts} />
+            <PostForm refetchPosts={refetch} />
             <div>
                 {
-                    posts.length ? posts.map(post => {
+                    data?.data?.length ? data.data.map(post => {
                         return <Post key={post.id} post={post} />
-                    }) : "Loading"
+                    }) : <ColorRingLoadingIcon />
                 }
             </div>
+            <PaginationClassic paginatedObject={data} onClickFunction={(pageNumber) => {console.log(pageNumber); setPageParam(pageNumber)}} />
         </div>
     );
 }

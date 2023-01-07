@@ -13,7 +13,6 @@ const SingleTweet = () => {
     const url = process.env.REACT_APP_BASE_API_URL
     const {id} = useParams()
     const token = useContext(AuthStateContext).token
-    const [tweetComments, setTweetComments] = useState([])
     const postType = "tweets"
 
 
@@ -23,15 +22,13 @@ const SingleTweet = () => {
             const response = await axios.get(url + path, {
                 headers:{"Authorization": "Bearer " + token}
             })
-            const tweet = response?.data?.tweet
-            setTweetComments(tweet.comments)
-            return tweet
+            return response?.data?.tweet
         }catch (error){
             return error;
         }
     }
 
-    const {isLoading, isError, error, data} = useQuery({
+    const {isLoading, isError, error, data, refetch} = useQuery({
         queryKey: ["tweet"],
         queryFn: getTweet
     })
@@ -50,12 +47,12 @@ const SingleTweet = () => {
         <div className="single-post-page">
             <UserInfo item={data} />
             <p className="col offset-2 fs-4 text-wrap text-break">{data.tweet}</p>
-            <CommentForm post={data} type={postType} setComments={setTweetComments} />
+            <CommentForm post={data} type={postType} refetchComments={refetch} />
             <h1 className="text-center">Previous Comments</h1>
 
             {
-                Object.keys(tweetComments).length > 0 ?
-                    tweetComments.map(comment => {
+                Object.keys(data?.comments).length > 0 ?
+                    data?.comments.map(comment => {
                     return <Comment key={comment.id} comment={comment} />
                 }) : <p className="text-center">Nothing to be found here.</p>
             }

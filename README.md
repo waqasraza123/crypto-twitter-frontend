@@ -18,6 +18,7 @@
 - Create a post   
 - Shows posts in real time as they are added
 - create comments
+- Classic (Bootstrap Pagination)
 
 # Tweets Page
 - can create tweets

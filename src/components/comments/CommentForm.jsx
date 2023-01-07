@@ -3,7 +3,7 @@ import axios from "axios";
 import {AuthStateContext} from "../../context/context";
 import {toast} from "react-toastify";
 
-const CommentForm = ({post, type, setComments}) => {
+const CommentForm = ({post, type, refetchComments}) => {
 
     const [comment, setComment] = useState("")
     const url = process.env.REACT_APP_BASE_API_URL
@@ -12,7 +12,6 @@ const CommentForm = ({post, type, setComments}) => {
 
     //submit the form
     const handleSubmit = async (e) => {
-        console.log(comment)
         e.preventDefault()
 
         try {
@@ -26,9 +25,7 @@ const CommentForm = ({post, type, setComments}) => {
             toast.success(response.data.message)
             setComment("")
             console.log(response.data.comment)
-            setComments(prevComments => {
-                return [response.data.comment, ...prevComments]
-            })
+            refetchComments()
         }catch (error){
             console.log(error)
         }

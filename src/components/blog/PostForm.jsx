@@ -4,7 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {AuthStateContext} from "../../context/context";
 
-const PostForm = ({setPosts}) => {
+const PostForm = ({refetchPosts}) => {
 
     const [title, setTitle] = useState("")
     const [postContent, setPostContent] = useState("")
@@ -33,9 +33,7 @@ const PostForm = ({setPosts}) => {
             console.log(response.data.post)
 
             //update posts state in parent and merge with new data
-            setPosts(prev => {
-                return [response.data.post, ...prev]
-            })
+            refetchPosts()
 
         }catch (error){
             toast.error(error.message)
