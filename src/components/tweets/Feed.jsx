@@ -7,42 +7,12 @@ import Tweet from "./Tweet";
 import axios from "axios";
 import {useQuery} from "@tanstack/react-query";
 import LoadingIcon from "../partials/LoadingIcon";
+import useTweets from "../../hooks/tweets/useTweets";
 
 const Feed = () => {
 
-    const url = process.env.REACT_APP_BASE_API_URL
-    const path = "/api/tweets"
-    const token = useContext(AuthStateContext).token
     const [pageParam, setPageParam] = useState(1)
-    const [feed, setFeed] = useState([])
-
-    const {
-        isLoading,
-        isError,
-        error,
-        isSuccess,
-        data,
-        refetch
-    } = useQuery({
-            queryKey: ["tweets", pageParam],
-            queryFn: () => getTweets(pageParam)
-    })
-
-    async function getTweets(pageParam){
-        try{
-            const response = await axios.get(url + path + "?page=" + pageParam, {
-                headers:{
-                    "Authorization": "Bearer " + token
-                }
-            })
-            //update state
-            const tweets = response?.data?.tweets
-            return tweets
-
-        }catch (error){
-            return error
-        }
-    }
+    const {isLoading, isError, error, data, isSuccess, refetch} = useTweets(pageParam)
 
     //load more posts
     function loadMorePosts(e){
@@ -59,10 +29,6 @@ const Feed = () => {
     //failed to fetch the results
     if(isError){
         toast.error(error.message)
-    }
-
-    if(isSuccess){
-        console.log(data)
     }
 
     return(

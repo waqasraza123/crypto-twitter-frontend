@@ -1,37 +1,15 @@
-import React, {useContext, useState} from "react";
 import {useParams} from "react-router-dom";
-import axios from "axios";
-import {useQuery} from "@tanstack/react-query";
-import {AuthStateContext} from "../../context/context";
 import CommentForm from "../comments/CommentForm";
 import Comment from "../comments/Comment";
 import UserInfo from "../partials/UserInfo";
 import LoadingIcon from "../partials/LoadingIcon";
+import useTweet from "../../hooks/tweets/useTweet";
 
 const SingleTweet = () => {
 
-    const url = process.env.REACT_APP_BASE_API_URL
     const {id} = useParams()
-    const token = useContext(AuthStateContext).token
     const postType = "tweets"
-
-
-    async function getTweet(){
-        const path = "/api/tweet/" + id;
-        try{
-            const response = await axios.get(url + path, {
-                headers:{"Authorization": "Bearer " + token}
-            })
-            return response?.data?.tweet
-        }catch (error){
-            return error;
-        }
-    }
-
-    const {isLoading, isError, error, data, refetch} = useQuery({
-        queryKey: ["tweet"],
-        queryFn: getTweet
-    })
+    const {isLoading, isError, error, data, isSuccess, refetch} = useTweet(id)
 
     if(isLoading){
         return (

@@ -5,6 +5,7 @@ import CryptoMeta from "./crypto/CryptoMeta";
 import {AuthStateContext} from "../context/context";
 import {useQuery} from "@tanstack/react-query";
 import LoadingIcon from "./partials/LoadingIcon";
+import CategoriesBar from "./CategoriesBar";
 
 /**
  * Listings Class to list all the available crypto
@@ -26,6 +27,7 @@ const Cryptocurrency = () => {
                     "Authorization": "Bearer " + token
                 }
             })
+            console.log(response)
             return response?.data?.data
         }catch (error){
             console.log(error);
@@ -50,7 +52,7 @@ const Cryptocurrency = () => {
 
     return(
         <>
-            <h1 className="text-center my-4">Consuming Coinmarketcap API</h1>
+            <CategoriesBar />
             <CryptoMeta setShowModal = {setShowModal}
                         show = {showModal}
                         meta = {cryptoMeta} />

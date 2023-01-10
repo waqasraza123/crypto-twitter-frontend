@@ -10,7 +10,9 @@ const Post = ({post}) => {
             <div className="container-fluid py-5">
                 <h1 className="display-5 fw-bold">{post.title}</h1>
                 <p className="col-md-8 fs-4">{post.content}</p>
-                <Link to={`/blog/post/${post.id}`} className="btn btn-primary btn-lg" type="button">Read More</Link>
+                <Link to={`/blog/post/${post.id}`}>
+                    <button className="btn btn-primary btn-lg">Read More</button>
+                </Link>
             </div>
         </div>
     );
