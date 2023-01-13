@@ -26,6 +26,10 @@
 - create comments
 - like/unlike tweets
 
+# Live Search
+- shows the results as user types with `useDebounce` custom hook
+- fetch the results from tweets and blog posts
+
 # Caching
 - Using [TranStack React Query](https://tanstack.com/) to cache the data
 

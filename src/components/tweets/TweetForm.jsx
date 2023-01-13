@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SearchBar from "../SearchBar";
 import {AuthStateContext} from "../../context/context";
 
-const TweetForm = ({refetchFeed}) => {
+const TweetForm = ({refetchFeed, sharedTweet}) => {
 
     const [tweet, setTweet] = useState("");
     const [characterCount, setCharacterCount] = useState(0)
@@ -57,6 +57,18 @@ const TweetForm = ({refetchFeed}) => {
             setTextAreaClasses("")
         }
     }
+
+    function getCryptoTweetSharedData(){
+        const num = sharedTweet?.quote?.USD;
+        return "Currency: " + sharedTweet?.name + " Price: " + num.price.toLocaleString() + " 24h Change: " + num.percent_change_24h + " 24h Volume: " +  num.volume_24h.toLocaleString()
+    }
+
+    useEffect(() => {
+        if (sharedTweet){
+            const sharedData = getCryptoTweetSharedData()
+            setTweet(sharedData)
+        }
+    }, [sharedTweet])
 
     return(
         <>

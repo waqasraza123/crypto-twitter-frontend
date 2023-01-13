@@ -8,11 +8,13 @@ import axios from "axios";
 import {useQuery} from "@tanstack/react-query";
 import LoadingIcon from "../partials/LoadingIcon";
 import useTweets from "../../hooks/tweets/useTweets";
+import {useLocation} from "react-router-dom";
 
 const Feed = () => {
 
     const [pageParam, setPageParam] = useState(1)
     const {isLoading, isError, error, data, isSuccess, refetch} = useTweets(pageParam)
+    const location = useLocation()
 
     //load more posts
     function loadMorePosts(e){
@@ -34,7 +36,7 @@ const Feed = () => {
     return(
         <>
             <ToastContainer />
-            <TweetForm refetchFeed={refetch} />
+            <TweetForm refetchFeed={refetch} sharedTweet={location.state?.crypto} />
             {
                 isSuccess && data?.data?.map(tweet => {
                     return <Tweet tweet={tweet} key={tweet.id} />

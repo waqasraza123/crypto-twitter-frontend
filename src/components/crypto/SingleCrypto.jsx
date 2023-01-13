@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import axios from "axios";
 import {AuthStateContext} from "../../context/context";
 import {useQuery} from "@tanstack/react-query";
+import {useNavigate} from "react-router-dom";
 
 const SingleCrypto = ({item, setCryptoMeta, setShowModal}) => {
 
@@ -10,6 +11,7 @@ const SingleCrypto = ({item, setCryptoMeta, setShowModal}) => {
     const path = "/api/crypto/meta/"
     const num = item?.quote?.USD;
     const currencyId = item.id
+    const navigate = useNavigate()
 
     const {isLoading, isError, error, isSuccess, data, refetch} = useQuery({
         queryKey: ["cryptoMeta", currencyId],
@@ -49,6 +51,14 @@ const SingleCrypto = ({item, setCryptoMeta, setShowModal}) => {
         setShowModal(true)
     }
 
+    function makeTweet(){
+        navigate("/feed", {
+            state: {
+                crypto: item
+            }
+        })
+    }
+
     //render function
     return (
         <>
@@ -78,8 +88,9 @@ const SingleCrypto = ({item, setCryptoMeta, setShowModal}) => {
                 <td>
                     ${num.volume_24h.toLocaleString()}
                 </td>
-                <td>View Charts</td>
-                <td>View Markets</td>
+                <td>
+                    <button onClick={makeTweet} className="btn btn-primary btn-sm">Tweet this?</button>
+                </td>
             </tr>
         </>
     )
