@@ -11,7 +11,7 @@ export default class Footer extends Component {
                                 <use xlinkHref="#bootstrap"></use>
                             </svg>
                         </a>
-                        <span className="mb-3 mb-md-0 text-muted">© Support Ukraine - 2022</span>
+                        <span className="mb-3 mb-md-0 text-muted">© Developed in 2022</span>
                     </div>
 
                     <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
