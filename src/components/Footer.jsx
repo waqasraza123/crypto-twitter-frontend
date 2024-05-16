@@ -3,8 +3,8 @@ import React, { Component } from "react";
 export default class Footer extends Component {
     render() {
         return (
-            <footer className="container-fluid bg-light py-3 fixed-bottom">
-                <div className="d-flex flex-wrap justify-content-between align-items-center border-top">
+            <footer className="container-fluid bg-light py-4 fixed-bottom border-top">
+                <div className="d-flex flex-wrap justify-content-between align-items-center">
                     <div className="col-md-4 d-flex align-items-center">
                         <a href="/" className="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
                             <svg className="bi" width="30" height="24">
